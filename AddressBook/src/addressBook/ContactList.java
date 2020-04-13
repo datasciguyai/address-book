@@ -178,19 +178,19 @@ public class ContactList extends JFrame {
 	private JList newContactList() {
 		listModel = new DefaultListModel<String>();
 		
-		Contacts.createContact("Jeremy", "D", "Reynolds");
-		Contacts.createContact("Adam", "X", "Ross");
-		Contacts.createContact("Professor","", "Posch");
-		Contacts.createContact("Someone","", "Somewhere");
+//		Contacts.createContact("Jeremy", "D", "Reynolds");
+//		Contacts.createContact("Adam", "X", "Ross");
+//		Contacts.createContact("Professor","", "Posch");
+//		Contacts.createContact("Someone","", "Somewhere");
 		
-		Contacts.retrieveContact().forEach(c -> listModel.addElement(c.getFirstName() + " " + c.getLastName()));
+//		Contacts.retrieveContact().forEach(c -> listModel.addElement(c.getFirstName() + " " + c.getLastName()));
 		contactList = new JList(listModel);
 		contactList.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseReleased(MouseEvent e) {
-				lblFirstName.setText(Contacts.retrieveContact().get(contactList.getSelectedIndex()).getFirstName());
-				lblMiddleName.setText(Contacts.retrieveContact().get(contactList.getSelectedIndex()).getMiddleName());
-				lblLastName.setText(Contacts.retrieveContact().get(contactList.getSelectedIndex()).getLastName());
+				lblFirstName.setText(Contacts.retrieveContact().get(contactList.getSelectedIndex()).getPerson().getCompany());
+				lblMiddleName.setText(Contacts.retrieveContact().get(contactList.getSelectedIndex()).getPerson().getMiddleName());
+				lblLastName.setText(Contacts.retrieveContact().get(contactList.getSelectedIndex()).getPerson().getLastName());
 			}
 		});
 

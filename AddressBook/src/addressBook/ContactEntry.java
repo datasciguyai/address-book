@@ -38,8 +38,8 @@ public class ContactEntry extends JFrame {
 	private JTextField textFieldEmail;
 	private JTextArea textAreaNotes;
 	private JComboBox<ContactType> comboBoxType;
-	private JComboBox<ContactTitle> comboBoxTitle;
-	private JComboBox<ContactState> comboBoxState;
+	private JComboBox<Title> comboBoxTitle;
+	private JComboBox<State> comboBoxState;
 
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -53,7 +53,7 @@ public class ContactEntry extends JFrame {
 			}
 		});
 	}
-	
+
 	/**
 	 * Create the frame.
 	 */
@@ -61,28 +61,34 @@ public class ContactEntry extends JFrame {
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 600, 600);
 		setResizable(false);
-		
+
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		contentPane.setLayout(new BorderLayout(0, 0));
 		setContentPane(contentPane);
-		
+
 		JPanel contactEntryPanel = newContactEntryPanel();
 		contentPane.add(contactEntryPanel, BorderLayout.CENTER);
-		
+
 		JPanel buttonPanel = new JPanel();
 		contentPane.add(buttonPanel, BorderLayout.SOUTH);
-		
+
 		JButton btnSave = new JButton("Save");
 		btnSave.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				Contacts.createContact(textFieldFirstName.getText(), textFieldMiddleName.getText(), textFieldLastName.getText());
+				Contacts.createContact((ContactType) comboBoxType.getSelectedItem(),
+						(Title) comboBoxTitle.getSelectedItem(), textFieldCompany.getText(),
+						textFieldFirstName.getText(), textFieldMiddleName.getText(), textFieldLastName.getText(),
+						textFieldAddress1.getText(), textFieldAddress2.getText(), textFieldCity.getText(),
+						(State) comboBoxState.getSelectedItem(), Integer.valueOf(textFieldZip.getText()),
+						textFieldHomePhone.getText(), textFieldMobilePhone.getText(), textFieldOfficePhone.getText(),
+						textFieldEmail.getText(), textAreaNotes.getText());
 				Contacts.updateContact();
 				closeContactEntry();
 			}
 		});
 		buttonPanel.add(btnSave);
-		
+
 		JButton btnCancel = new JButton("Cancel");
 		btnCancel.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -91,14 +97,14 @@ public class ContactEntry extends JFrame {
 		});
 		buttonPanel.add(btnCancel);
 	}
-	
+
 	private void closeContactEntry() {
 		this.dispose();
 	}
 
 	private JPanel newContactEntryPanel() {
 		final int PADDING = 15;
-		
+
 		JLabel lblTypeLabel;
 		JLabel lblTitleLabel;
 		JLabel lblCompanyLabel;
@@ -115,11 +121,11 @@ public class ContactEntry extends JFrame {
 		JLabel lblOfficePhoneLabel;
 		JLabel lblEmailLabel;
 		JLabel lblNotesLabel;
-		
+
 		JPanel contactEntryPanel = new JPanel();
 		SpringLayout sl_contactDetailsPanel = new SpringLayout();
 		contactEntryPanel.setLayout(sl_contactDetailsPanel);
-		
+
 		lblTypeLabel = new JLabel("Type:");
 		lblTitleLabel = new JLabel("Title:");
 		lblCompanyLabel = new JLabel("Company:");
@@ -136,16 +142,16 @@ public class ContactEntry extends JFrame {
 		lblOfficePhoneLabel = new JLabel("Office Phone:");
 		lblEmailLabel = new JLabel("Email:");
 		lblNotesLabel = new JLabel("Notes:");
-		
+
 		JLabel[] labels = { lblTitleLabel, lblCompanyLabel, lblFirstNameLabel, lblMiddleNameLabel, lblLastNameLabel,
 				lblAddress1Label, lblAddress2Label, lblCityLabel, lblHomePhoneLabel, lblMobilePhoneLabel,
 				lblOfficePhoneLabel, lblEmailLabel, lblNotesLabel };
 
 //		JTextField[] values = { textFieldCompany, textFieldFirstName, textFieldMiddleName, textFieldLastName };
-		sl_contactDetailsPanel.putConstraint(SpringLayout.NORTH, lblTypeLabel, 36, SpringLayout.NORTH, contactEntryPanel);
+		sl_contactDetailsPanel.putConstraint(SpringLayout.NORTH, lblTypeLabel, 36, SpringLayout.NORTH,
+				contactEntryPanel);
 		sl_contactDetailsPanel.putConstraint(SpringLayout.WEST, lblTypeLabel, 44, SpringLayout.WEST, contactEntryPanel);
-		contactEntryPanel.add(lblTypeLabel);		
-		
+		contactEntryPanel.add(lblTypeLabel);
 
 		for (int i = 0; i < labels.length; i++) {
 			sl_contactDetailsPanel.putConstraint(SpringLayout.WEST, labels[i], 0, SpringLayout.WEST,
@@ -154,113 +160,129 @@ public class ContactEntry extends JFrame {
 					contactEntryPanel.getComponent(i));
 			contactEntryPanel.add(labels[i]);
 		}
-		
+
 		comboBoxType = new JComboBox();
 		comboBoxType.setModel(new DefaultComboBoxModel(ContactType.values()));
 		sl_contactDetailsPanel.putConstraint(SpringLayout.NORTH, comboBoxType, 0, SpringLayout.NORTH, lblTypeLabel);
 		sl_contactDetailsPanel.putConstraint(SpringLayout.WEST, comboBoxType, 100, SpringLayout.WEST, lblTypeLabel);
 		contactEntryPanel.add(comboBoxType);
-		
+
 		comboBoxTitle = new JComboBox();
-		comboBoxTitle.setModel(new DefaultComboBoxModel(ContactTitle.values()));
+		comboBoxTitle.setModel(new DefaultComboBoxModel(Title.values()));
 		sl_contactDetailsPanel.putConstraint(SpringLayout.NORTH, comboBoxTitle, 0, SpringLayout.NORTH, lblTitleLabel);
 		sl_contactDetailsPanel.putConstraint(SpringLayout.WEST, comboBoxTitle, 100, SpringLayout.WEST, lblTitleLabel);
 		contactEntryPanel.add(comboBoxTitle);
-		
+
 		textFieldCompany = new JTextField();
-		sl_contactDetailsPanel.putConstraint(SpringLayout.NORTH, textFieldCompany, 0, SpringLayout.NORTH, lblCompanyLabel);
-		sl_contactDetailsPanel.putConstraint(SpringLayout.WEST, textFieldCompany, 100, SpringLayout.WEST, lblCompanyLabel);
+		sl_contactDetailsPanel.putConstraint(SpringLayout.NORTH, textFieldCompany, 0, SpringLayout.NORTH,
+				lblCompanyLabel);
+		sl_contactDetailsPanel.putConstraint(SpringLayout.WEST, textFieldCompany, 100, SpringLayout.WEST,
+				lblCompanyLabel);
 		contactEntryPanel.add(textFieldCompany);
 		textFieldCompany.setColumns(35);
-		
+
 		textFieldFirstName = new JTextField();
-		sl_contactDetailsPanel.putConstraint(SpringLayout.NORTH, textFieldFirstName, 0, SpringLayout.NORTH, lblFirstNameLabel);
-		sl_contactDetailsPanel.putConstraint(SpringLayout.WEST, textFieldFirstName, 100, SpringLayout.WEST, lblFirstNameLabel);
+		sl_contactDetailsPanel.putConstraint(SpringLayout.NORTH, textFieldFirstName, 0, SpringLayout.NORTH,
+				lblFirstNameLabel);
+		sl_contactDetailsPanel.putConstraint(SpringLayout.WEST, textFieldFirstName, 100, SpringLayout.WEST,
+				lblFirstNameLabel);
 		contactEntryPanel.add(textFieldFirstName);
 		textFieldFirstName.setColumns(35);
-		
+
 		textFieldMiddleName = new JTextField();
-		sl_contactDetailsPanel.putConstraint(SpringLayout.NORTH, textFieldMiddleName, 0, SpringLayout.NORTH, lblMiddleNameLabel);
-		sl_contactDetailsPanel.putConstraint(SpringLayout.WEST, textFieldMiddleName, 100, SpringLayout.WEST, lblMiddleNameLabel);
+		sl_contactDetailsPanel.putConstraint(SpringLayout.NORTH, textFieldMiddleName, 0, SpringLayout.NORTH,
+				lblMiddleNameLabel);
+		sl_contactDetailsPanel.putConstraint(SpringLayout.WEST, textFieldMiddleName, 100, SpringLayout.WEST,
+				lblMiddleNameLabel);
 		contactEntryPanel.add(textFieldMiddleName);
 		textFieldMiddleName.setColumns(35);
-		
+
 		textFieldLastName = new JTextField();
-		sl_contactDetailsPanel.putConstraint(SpringLayout.NORTH, textFieldLastName, 0, SpringLayout.NORTH, lblLastNameLabel);
-		sl_contactDetailsPanel.putConstraint(SpringLayout.WEST, textFieldLastName, 100, SpringLayout.WEST, lblLastNameLabel);
+		sl_contactDetailsPanel.putConstraint(SpringLayout.NORTH, textFieldLastName, 0, SpringLayout.NORTH,
+				lblLastNameLabel);
+		sl_contactDetailsPanel.putConstraint(SpringLayout.WEST, textFieldLastName, 100, SpringLayout.WEST,
+				lblLastNameLabel);
 		contactEntryPanel.add(textFieldLastName);
 		textFieldLastName.setColumns(35);
-		
+
 		textFieldAddress1 = new JTextField();
-		sl_contactDetailsPanel.putConstraint(SpringLayout.NORTH, textFieldAddress1, 0, SpringLayout.NORTH, lblAddress1Label);
-		sl_contactDetailsPanel.putConstraint(SpringLayout.WEST, textFieldAddress1, 100, SpringLayout.WEST, lblAddress1Label);
+		sl_contactDetailsPanel.putConstraint(SpringLayout.NORTH, textFieldAddress1, 0, SpringLayout.NORTH,
+				lblAddress1Label);
+		sl_contactDetailsPanel.putConstraint(SpringLayout.WEST, textFieldAddress1, 100, SpringLayout.WEST,
+				lblAddress1Label);
 		contactEntryPanel.add(textFieldAddress1);
 		textFieldAddress1.setColumns(35);
-		
+
 		textFieldAddress2 = new JTextField();
-		sl_contactDetailsPanel.putConstraint(SpringLayout.NORTH, textFieldAddress2, 0, SpringLayout.NORTH, lblAddress2Label);
-		sl_contactDetailsPanel.putConstraint(SpringLayout.WEST, textFieldAddress2, 100, SpringLayout.WEST, lblAddress2Label);
+		sl_contactDetailsPanel.putConstraint(SpringLayout.NORTH, textFieldAddress2, 0, SpringLayout.NORTH,
+				lblAddress2Label);
+		sl_contactDetailsPanel.putConstraint(SpringLayout.WEST, textFieldAddress2, 100, SpringLayout.WEST,
+				lblAddress2Label);
 		contactEntryPanel.add(textFieldAddress2);
-		textFieldAddress2.setColumns(35);		
-		
+		textFieldAddress2.setColumns(35);
+
 		textFieldCity = new JTextField();
 		sl_contactDetailsPanel.putConstraint(SpringLayout.NORTH, textFieldCity, 0, SpringLayout.NORTH, lblCityLabel);
 		sl_contactDetailsPanel.putConstraint(SpringLayout.WEST, textFieldCity, 100, SpringLayout.WEST, lblCityLabel);
 		contactEntryPanel.add(textFieldCity);
 		textFieldCity.setColumns(10);
-		
+
 		sl_contactDetailsPanel.putConstraint(SpringLayout.NORTH, lblStateLabel, 0, SpringLayout.NORTH, textFieldCity);
 		sl_contactDetailsPanel.putConstraint(SpringLayout.WEST, lblStateLabel, 125, SpringLayout.WEST, textFieldCity);
 		contactEntryPanel.add(lblStateLabel);
-		
+
 		comboBoxState = new JComboBox();
-		comboBoxState.setModel(new DefaultComboBoxModel(ContactState.values()));
+		comboBoxState.setModel(new DefaultComboBoxModel(State.values()));
 		sl_contactDetailsPanel.putConstraint(SpringLayout.NORTH, comboBoxState, 0, SpringLayout.NORTH, lblStateLabel);
 		sl_contactDetailsPanel.putConstraint(SpringLayout.WEST, comboBoxState, 50, SpringLayout.WEST, lblStateLabel);
 		contactEntryPanel.add(comboBoxState);
-		
-		
+
 		sl_contactDetailsPanel.putConstraint(SpringLayout.NORTH, lblZipLabel, 0, SpringLayout.NORTH, comboBoxState);
 		sl_contactDetailsPanel.putConstraint(SpringLayout.WEST, lblZipLabel, 60, SpringLayout.WEST, comboBoxState);
-		contactEntryPanel.add(lblZipLabel);	
-		
+		contactEntryPanel.add(lblZipLabel);
+
 		textFieldZip = new JTextField();
 		sl_contactDetailsPanel.putConstraint(SpringLayout.NORTH, textFieldZip, 0, SpringLayout.NORTH, lblZipLabel);
 		sl_contactDetailsPanel.putConstraint(SpringLayout.WEST, textFieldZip, 30, SpringLayout.WEST, lblZipLabel);
 		contactEntryPanel.add(textFieldZip);
 		textFieldZip.setColumns(10);
-		
+
 		textFieldHomePhone = new JTextField();
-		sl_contactDetailsPanel.putConstraint(SpringLayout.NORTH, textFieldHomePhone, 0, SpringLayout.NORTH, lblHomePhoneLabel);
-		sl_contactDetailsPanel.putConstraint(SpringLayout.WEST, textFieldHomePhone, 100, SpringLayout.WEST, lblHomePhoneLabel);
+		sl_contactDetailsPanel.putConstraint(SpringLayout.NORTH, textFieldHomePhone, 0, SpringLayout.NORTH,
+				lblHomePhoneLabel);
+		sl_contactDetailsPanel.putConstraint(SpringLayout.WEST, textFieldHomePhone, 100, SpringLayout.WEST,
+				lblHomePhoneLabel);
 		contactEntryPanel.add(textFieldHomePhone);
 		textFieldHomePhone.setColumns(10);
-		
+
 		textFieldMobilePhone = new JTextField();
-		sl_contactDetailsPanel.putConstraint(SpringLayout.NORTH, textFieldMobilePhone, 0, SpringLayout.NORTH, lblMobilePhoneLabel);
-		sl_contactDetailsPanel.putConstraint(SpringLayout.WEST, textFieldMobilePhone, 100, SpringLayout.WEST, lblMobilePhoneLabel);
+		sl_contactDetailsPanel.putConstraint(SpringLayout.NORTH, textFieldMobilePhone, 0, SpringLayout.NORTH,
+				lblMobilePhoneLabel);
+		sl_contactDetailsPanel.putConstraint(SpringLayout.WEST, textFieldMobilePhone, 100, SpringLayout.WEST,
+				lblMobilePhoneLabel);
 		contactEntryPanel.add(textFieldMobilePhone);
 		textFieldMobilePhone.setColumns(10);
-		
+
 		textFieldOfficePhone = new JTextField();
-		sl_contactDetailsPanel.putConstraint(SpringLayout.NORTH, textFieldOfficePhone, 0, SpringLayout.NORTH, lblOfficePhoneLabel);
-		sl_contactDetailsPanel.putConstraint(SpringLayout.WEST, textFieldOfficePhone, 100, SpringLayout.WEST, lblOfficePhoneLabel);
+		sl_contactDetailsPanel.putConstraint(SpringLayout.NORTH, textFieldOfficePhone, 0, SpringLayout.NORTH,
+				lblOfficePhoneLabel);
+		sl_contactDetailsPanel.putConstraint(SpringLayout.WEST, textFieldOfficePhone, 100, SpringLayout.WEST,
+				lblOfficePhoneLabel);
 		contactEntryPanel.add(textFieldOfficePhone);
 		textFieldOfficePhone.setColumns(10);
-		
+
 		textFieldEmail = new JTextField();
 		sl_contactDetailsPanel.putConstraint(SpringLayout.NORTH, textFieldEmail, 0, SpringLayout.NORTH, lblEmailLabel);
 		sl_contactDetailsPanel.putConstraint(SpringLayout.WEST, textFieldEmail, 100, SpringLayout.WEST, lblEmailLabel);
 		contactEntryPanel.add(textFieldEmail);
 		textFieldEmail.setColumns(35);
-		
+
 		textAreaNotes = new JTextArea();
 		textAreaNotes.setRows(10);
 		sl_contactDetailsPanel.putConstraint(SpringLayout.NORTH, textAreaNotes, 0, SpringLayout.NORTH, lblNotesLabel);
 		sl_contactDetailsPanel.putConstraint(SpringLayout.WEST, textAreaNotes, 100, SpringLayout.WEST, lblNotesLabel);
 		contactEntryPanel.add(textAreaNotes);
 		textAreaNotes.setColumns(35);
-		
 
 //		for (int i = 0; i < values.length; i++) {
 //			sl_contactDetailsPanel.putConstraint(SpringLayout.WEST, values[i], 100, SpringLayout.WEST,
@@ -271,8 +293,6 @@ public class ContactEntry extends JFrame {
 //			contactEntryPanel.add(values[i]);
 //		}
 
-
-		
 		return contactEntryPanel;
 	}
 
@@ -377,16 +397,15 @@ public class ContactEntry extends JFrame {
 	/**
 	 * @param comboBoxTitle the comboBoxTitle to set
 	 */
-	public void setComboBoxTitle(JComboBox<ContactTitle> comboBoxTitle) {
+	public void setComboBoxTitle(JComboBox<Title> comboBoxTitle) {
 		this.comboBoxTitle = comboBoxTitle;
 	}
 
 	/**
 	 * @param comboBoxState the comboBoxState to set
 	 */
-	public void setComboBoxState(JComboBox<ContactState> comboBoxState) {
+	public void setComboBoxState(JComboBox<State> comboBoxState) {
 		this.comboBoxState = comboBoxState;
 	}
 
-	
 }

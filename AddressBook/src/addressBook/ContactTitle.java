@@ -5,5 +5,5 @@ package addressBook;
  *
  */
 public enum ContactTitle {
-	MR, MRS, MS, DR;
+	MR, MRS, MS, DR
 }

@@ -2,9 +2,9 @@ package addressBook;
 
 /**
  * 
- * @author Jeremiah Reynolds
+ * @author Adam Ross
  *
  */
 public enum ContactType {
-	PROFESSIONAL, SCHOOL, PERSONAL;
+	PROFESSIONAL, SCHOOL, PERSONAL
 }

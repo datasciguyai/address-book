@@ -5,5 +5,5 @@ package addressBook;
  *
  */
 public enum ContactState {
-	UT, CA, AZ;
+	UT, CA, AZ
 }
