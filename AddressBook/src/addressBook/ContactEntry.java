@@ -2,9 +2,9 @@ package addressBook;
 
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
-
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.border.EmptyBorder;
@@ -17,6 +17,8 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
 /**
+ * Implements a GUI form that allows the user to add a new contact or to update
+ * an existing contact.
  * 
  * @author Jeremiah Reynolds
  *
@@ -55,7 +57,7 @@ public class ContactEntry extends JFrame {
 	}
 
 	/**
-	 * Create the frame.
+	 * Creates the frame and adds components.
 	 */
 	public ContactEntry() {
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -73,33 +75,11 @@ public class ContactEntry extends JFrame {
 		JPanel buttonPanel = new JPanel();
 		contentPane.add(buttonPanel, BorderLayout.SOUTH);
 
-		JButton btnSave = new JButton("Save");
-		btnSave.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				Contacts.createContact((ContactType) comboBoxType.getSelectedItem(),
-						(Title) comboBoxTitle.getSelectedItem(), textFieldCompany.getText(),
-						textFieldFirstName.getText(), textFieldMiddleName.getText(), textFieldLastName.getText(),
-						textFieldAddress1.getText(), textFieldAddress2.getText(), textFieldCity.getText(),
-						(State) comboBoxState.getSelectedItem(), Integer.valueOf(textFieldZip.getText()),
-						textFieldHomePhone.getText(), textFieldMobilePhone.getText(), textFieldOfficePhone.getText(),
-						textFieldEmail.getText(), textAreaNotes.getText());
-				Contacts.updateContact();
-				closeContactEntry();
-			}
-		});
+		JButton btnSave = newBtnSave();
 		buttonPanel.add(btnSave);
 
-		JButton btnCancel = new JButton("Cancel");
-		btnCancel.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				closeContactEntry();
-			}
-		});
+		JButton btnCancel = newBtnCancel();
 		buttonPanel.add(btnCancel);
-	}
-
-	private void closeContactEntry() {
-		this.dispose();
 	}
 
 	private JPanel newContactEntryPanel() {
@@ -148,11 +128,14 @@ public class ContactEntry extends JFrame {
 				lblOfficePhoneLabel, lblEmailLabel, lblNotesLabel };
 
 //		JTextField[] values = { textFieldCompany, textFieldFirstName, textFieldMiddleName, textFieldLastName };
+
+		// Positions and adds lblTypeLabel
 		sl_contactDetailsPanel.putConstraint(SpringLayout.NORTH, lblTypeLabel, 36, SpringLayout.NORTH,
 				contactEntryPanel);
 		sl_contactDetailsPanel.putConstraint(SpringLayout.WEST, lblTypeLabel, 44, SpringLayout.WEST, contactEntryPanel);
 		contactEntryPanel.add(lblTypeLabel);
 
+		// Positions and adds labels
 		for (int i = 0; i < labels.length; i++) {
 			sl_contactDetailsPanel.putConstraint(SpringLayout.WEST, labels[i], 0, SpringLayout.WEST,
 					contactEntryPanel.getComponent(i));
@@ -161,14 +144,14 @@ public class ContactEntry extends JFrame {
 			contactEntryPanel.add(labels[i]);
 		}
 
-		comboBoxType = new JComboBox();
-		comboBoxType.setModel(new DefaultComboBoxModel(ContactType.values()));
+		comboBoxType = new JComboBox<ContactType>();
+		comboBoxType.setModel(new DefaultComboBoxModel<ContactType>(ContactType.values()));
 		sl_contactDetailsPanel.putConstraint(SpringLayout.NORTH, comboBoxType, 0, SpringLayout.NORTH, lblTypeLabel);
 		sl_contactDetailsPanel.putConstraint(SpringLayout.WEST, comboBoxType, 100, SpringLayout.WEST, lblTypeLabel);
 		contactEntryPanel.add(comboBoxType);
 
-		comboBoxTitle = new JComboBox();
-		comboBoxTitle.setModel(new DefaultComboBoxModel(Title.values()));
+		comboBoxTitle = new JComboBox<Title>();
+		comboBoxTitle.setModel(new DefaultComboBoxModel<Title>(Title.values()));
 		sl_contactDetailsPanel.putConstraint(SpringLayout.NORTH, comboBoxTitle, 0, SpringLayout.NORTH, lblTitleLabel);
 		sl_contactDetailsPanel.putConstraint(SpringLayout.WEST, comboBoxTitle, 100, SpringLayout.WEST, lblTitleLabel);
 		contactEntryPanel.add(comboBoxTitle);
@@ -231,8 +214,8 @@ public class ContactEntry extends JFrame {
 		sl_contactDetailsPanel.putConstraint(SpringLayout.WEST, lblStateLabel, 125, SpringLayout.WEST, textFieldCity);
 		contactEntryPanel.add(lblStateLabel);
 
-		comboBoxState = new JComboBox();
-		comboBoxState.setModel(new DefaultComboBoxModel(State.values()));
+		comboBoxState = new JComboBox<State>();
+		comboBoxState.setModel(new DefaultComboBoxModel<State>(State.values()));
 		sl_contactDetailsPanel.putConstraint(SpringLayout.NORTH, comboBoxState, 0, SpringLayout.NORTH, lblStateLabel);
 		sl_contactDetailsPanel.putConstraint(SpringLayout.WEST, comboBoxState, 50, SpringLayout.WEST, lblStateLabel);
 		contactEntryPanel.add(comboBoxState);
@@ -284,128 +267,54 @@ public class ContactEntry extends JFrame {
 		contactEntryPanel.add(textAreaNotes);
 		textAreaNotes.setColumns(35);
 
-//		for (int i = 0; i < values.length; i++) {
-//			sl_contactDetailsPanel.putConstraint(SpringLayout.WEST, values[i], 100, SpringLayout.WEST,
-//					contactEntryPanel.getComponent(i));
-//			sl_contactDetailsPanel.putConstraint(SpringLayout.NORTH, values[i], 0, SpringLayout.NORTH,
-//					contactEntryPanel.getComponent(i));
-//			values[i].setColumns(35);
-//			contactEntryPanel.add(values[i]);
-//		}
-
 		return contactEntryPanel;
 	}
 
-	/**
-	 * @param textFieldCompany the textFieldCompany to set
-	 */
-	public void setTextFieldCompany(String text) {
-		this.textFieldCompany.setText(text);
+	private JButton newBtnSave() {
+		JButton btnSave = new JButton("Save");
+		btnSave.addActionListener(new ActionListener() {
+
+			/**
+			 * Saves a new contact.
+			 */
+			public void actionPerformed(ActionEvent e) {
+				int zip = 0;
+
+				if (textFieldFirstName.getText().isEmpty()) {
+					JOptionPane.showMessageDialog(null, "Please enter a minimum of a first name.");
+				} else {
+					if (!textFieldZip.getText().isEmpty()) {
+						zip = Integer.valueOf(textFieldZip.getText());
+					}
+					Contacts.createContact((ContactType) comboBoxType.getSelectedItem(),
+							(Title) comboBoxTitle.getSelectedItem(), textFieldCompany.getText(),
+							textFieldFirstName.getText(), textFieldMiddleName.getText(), textFieldLastName.getText(),
+							textFieldAddress1.getText(), textFieldAddress2.getText(), textFieldCity.getText(),
+							(State) comboBoxState.getSelectedItem(), zip, textFieldHomePhone.getText(),
+							textFieldMobilePhone.getText(), textFieldOfficePhone.getText(), textFieldEmail.getText(),
+							textAreaNotes.getText());
+					closeContactEntry();
+				}
+			}
+		});
+		return btnSave;
 	}
 
-	/**
-	 * @param textFieldFirstName the textFieldFirstName to set
-	 */
-	public void setTextFieldFirstName(String text) {
-		this.textFieldFirstName.setText(text);
+	private JButton newBtnCancel() {
+		JButton btnCancel = new JButton("Cancel");
+		btnCancel.addActionListener(new ActionListener() {
+
+			/**
+			 * Closes this frame.
+			 */
+			public void actionPerformed(ActionEvent e) {
+				closeContactEntry();
+			}
+		});
+		return btnCancel;
 	}
 
-	/**
-	 * @param textFieldMiddleName the textFieldMiddleName to set
-	 */
-	public void setTextFieldMiddleName(String text) {
-		this.textFieldMiddleName.setText(text);
+	private void closeContactEntry() {
+		this.dispose();
 	}
-
-	/**
-	 * @param textFieldLastName the textFieldLastName to set
-	 */
-	public void setTextFieldLastName(String text) {
-		this.textFieldLastName.setText(text);
-	}
-
-	/**
-	 * @param textFieldAddress1 the textFieldAddress1 to set
-	 */
-	public void setTextFieldAddress1(String text) {
-		this.textFieldAddress1.setText(text);
-	}
-
-	/**
-	 * @param textFieldAddress2 the textFieldAddress2 to set
-	 */
-	public void setTextFieldAddress2(String text) {
-		this.textFieldAddress2.setText(text);
-	}
-
-	/**
-	 * @param textFieldCity the textFieldCity to set
-	 */
-	public void setTextFieldCity(String text) {
-		this.textFieldCity.setText(text);
-	}
-
-	/**
-	 * @param textFieldZip the textFieldZip to set
-	 */
-	public void setTextFieldZip(String text) {
-		this.textFieldZip.setText(text);
-	}
-
-	/**
-	 * @param textFieldHomePhone the textFieldHomePhone to set
-	 */
-	public void setTextFieldHomePhone(String text) {
-		this.textFieldHomePhone.setText(text);
-	}
-
-	/**
-	 * @param textFieldMobilePhone the textFieldMobilePhone to set
-	 */
-	public void setTextFieldMobilePhone(String text) {
-		this.textFieldMobilePhone.setText(text);
-	}
-
-	/**
-	 * @param textFieldOfficePhone the textFieldOfficePhone to set
-	 */
-	public void setTextFieldOfficePhone(String text) {
-		this.textFieldOfficePhone.setText(text);
-	}
-
-	/**
-	 * @param textFieldEmail the textFieldEmail to set
-	 */
-	public void setTextFieldEmail(String text) {
-		this.textFieldEmail.setText(text);
-	}
-
-	/**
-	 * @param textAreaNotes the textAreaNotes to set
-	 */
-	public void setTextAreaNotes(String text) {
-		this.textAreaNotes.setText(text);
-	}
-
-	/**
-	 * @param comboBoxType the comboBoxType to set
-	 */
-	public void setComboBoxType(JComboBox<ContactType> comboBoxType) {
-		this.comboBoxType = comboBoxType;
-	}
-
-	/**
-	 * @param comboBoxTitle the comboBoxTitle to set
-	 */
-	public void setComboBoxTitle(JComboBox<Title> comboBoxTitle) {
-		this.comboBoxTitle = comboBoxTitle;
-	}
-
-	/**
-	 * @param comboBoxState the comboBoxState to set
-	 */
-	public void setComboBoxState(JComboBox<State> comboBoxState) {
-		this.comboBoxState = comboBoxState;
-	}
-
 }

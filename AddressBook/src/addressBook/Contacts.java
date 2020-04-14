@@ -1,57 +1,53 @@
 package addressBook;
 
-import java.awt.Window.Type;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
+ * Represents Contacts; a singleton class that consists of static methods that
+ * create, retrieve, update, and delete a contact.
  * 
  * @author Jeremiah Reynolds
  *
  */
 public class Contacts {
 	private static Contacts contacts = new Contacts();
-	private static List<Contact> contact = new ArrayList<>();
-	private static ContactList cl;
+	private static List<Contact> contactList = new ArrayList<>();
+	private static ContactList contactListFrame;
 
 	private Contacts() {
 	}
 
-	public static Contacts getInstance() {
+	protected static Contacts getInstance() {
 		return contacts;
 	}
-	
-		public static void createContact(ContactType type, Title title, String company, String firstName, String middleName,
-			String lastName, String address1, String address2, String city, State state, int zip, String phoneHome,
-			String phoneMobile, String phoneOffice, String email, String notes) {
 
-		Person p = new Person(title, firstName, middleName, lastName, company);
-		Address a = new Address(address1, address2, city, state, zip);
-		Phone ph = new Phone(phoneHome, phoneMobile, phoneOffice);
-		EmailAddress e = new EmailAddress(email);
+	protected static void createContact(ContactType type, Title title, String company, String firstName,
+			String middleName, String lastName, String address1, String address2, String city, State state, int zip,
+			String phoneHome, String phoneMobile, String phoneOffice, String email, String notes) {
 
-		contact.add(new Contact(type, p, a, ph, e, notes));
+		Person person = new Person(title, firstName, middleName, lastName, company);
+		Address address = new Address(address1, address2, city, state, zip);
+		Phone phone = new Phone(phoneHome, phoneMobile, phoneOffice);
+		EmailAddress emailAddress = new EmailAddress(email);
+
+		contactList.add(new Contact(type, person, address, phone, emailAddress, notes));
+		contactListFrame.addNewContact(contactList.get(contactList.size() - 1));
 	}
 
-	public static List<Contact> retrieveContact() {
-		return contact;
+	protected static List<Contact> retrieveContact() {
+		return contactList;
 	}
 
-	public static void updateContact() {
-//		cl.updateContactList(contact.get(contact.size() - 1));
+//	protected static void updateContact() {
+//		// TODO Implement contact update functionality
+//	}
+
+	protected static void deleteContact(int id) {
+		contactList.removeIf(f -> f.getId() == id);
 	}
 
-	public static void deleteContact(String firstName) {
-//		contact.removeIf(f -> f.getFirstName() == firstName);
+	protected static void setContactList(ContactList contactList) {
+		Contacts.contactListFrame = contactList;
 	}
-
-	/**
-	 * @param cl the cl to set
-	 */
-	public static void setCl(ContactList cl) {
-		Contacts.cl = cl;
-	}
-
-	
-
 }

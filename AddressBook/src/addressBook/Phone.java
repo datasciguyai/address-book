@@ -78,7 +78,7 @@ public class Phone {
 	}
 
 	public String optional(String string) {
-		if (string == null)
+		if (string.isEmpty())
 			return "";
 		else
 			return toPhoneNumber(string);
