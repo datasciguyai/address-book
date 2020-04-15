@@ -4,22 +4,22 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Represents Contacts; a singleton class that consists of static methods that
+ * Represents Crud; a singleton class that consists of static methods that
  * create, retrieve, update, and delete a contact.
  * 
  * @author Jeremiah Reynolds
  *
  */
-public class Contacts {
-	private static Contacts contacts = new Contacts();
+public class Crud {
+	private static Crud crud = new Crud();
 	private static List<Contact> contactList = new ArrayList<>();
 	private static ContactList contactListFrame;
 
-	private Contacts() {
+	private Crud() {
 	}
 
-	protected static Contacts getInstance() {
-		return contacts;
+	protected static Crud getInstance() {
+		return crud;
 	}
 
 	protected static void createContact(ContactType type, Title title, String company, String firstName,
@@ -48,6 +48,6 @@ public class Contacts {
 	}
 
 	protected static void setContactList(ContactList contactList) {
-		Contacts.contactListFrame = contactList;
+		Crud.contactListFrame = contactList;
 	}
 }
