@@ -286,7 +286,7 @@ public class ContactEntry extends JFrame {
 					if (!textFieldZip.getText().isEmpty()) {
 						zip = Integer.valueOf(textFieldZip.getText());
 					}
-					Contacts.createContact((ContactType) comboBoxType.getSelectedItem(),
+					Crud.createContact((ContactType) comboBoxType.getSelectedItem(),
 							(Title) comboBoxTitle.getSelectedItem(), textFieldCompany.getText(),
 							textFieldFirstName.getText(), textFieldMiddleName.getText(), textFieldLastName.getText(),
 							textFieldAddress1.getText(), textFieldAddress2.getText(), textFieldCity.getText(),
