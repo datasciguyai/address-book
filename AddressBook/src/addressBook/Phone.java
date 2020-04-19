@@ -86,7 +86,7 @@ public class Phone {
 	 * @return the String if not null, or blank text if so
 	 */
 	public String optional(String string) {
-		if (string == null)
+		if (string.isEmpty())
 			return "";
 		else
 			return toPhoneNumber(string);
