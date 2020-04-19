@@ -1,6 +1,9 @@
 package addressBook;
 
 /**
+ * Constructs a Contact object, which is the primary element of a contact in the
+ * address book.
+ * 
  * @author Adam Ross
  *
  */
@@ -15,14 +18,17 @@ public class Contact {
 	private String notes;
 
 	/**
-	 * @param type
-	 * @param person
-	 * @param address
-	 * @param phone
-	 * @param email
-	 * @param notes
+	 * Constructs the Contact object.
+	 * 
+	 * @param type    the contact type
+	 * @param person  the Person object to be used
+	 * @param address the Address object to be used
+	 * @param phone   the Phone object to be used
+	 * @param email   the Email object to be used
+	 * @param notes   notes about the contact
 	 */
-	public Contact(ContactType type, Person person, Address address, Phone phone, EmailAddress email, String notes) {
+	public Contact(ContactType type, Person person, Address address,
+			Phone phone, EmailAddress email, String notes) {
 		this.id = count++;
 		this.type = type;
 		this.person = person;
@@ -32,13 +38,20 @@ public class Contact {
 		this.notes = optional(notes);
 	}
 
+	/**
+	 * Constructs a new contact using an already-existing contact.
+	 * 
+	 * @param contact the contact in which the new contact will be based
+	 */
 	public Contact(Contact contact) {
-		this(contact.getType(), contact.getPerson(), contact.getAddress(), contact.getPhone(), contact.getEmail(),
-				contact.getNotes());
+		this(contact.getType(), contact.getPerson(), contact.getAddress(),
+				contact.getPhone(), contact.getEmail(), contact.getNotes());
 
 	}
 
 	/**
+	 * Gets the unique id for the contact.
+	 * 
 	 * @return the id
 	 */
 	public int getId() {
@@ -46,6 +59,8 @@ public class Contact {
 	}
 
 	/**
+	 * Gets the current count which is used to set the id for the contact.
+	 * 
 	 * @return the count
 	 */
 	public static int getCount() {
@@ -53,6 +68,8 @@ public class Contact {
 	}
 
 	/**
+	 * Gets the type of contact.
+	 * 
 	 * @return the type
 	 */
 	public ContactType getType() {
@@ -60,6 +77,8 @@ public class Contact {
 	}
 
 	/**
+	 * Sets the type of contact.
+	 * 
 	 * @param type the type to set
 	 */
 	public void setType(ContactType type) {
@@ -67,6 +86,8 @@ public class Contact {
 	}
 
 	/**
+	 * Gets the Person object.
+	 * 
 	 * @return the person
 	 */
 	public Person getPerson() {
@@ -74,6 +95,8 @@ public class Contact {
 	}
 
 	/**
+	 * Gets the Address object.
+	 * 
 	 * @return the address
 	 */
 	public Address getAddress() {
@@ -81,6 +104,8 @@ public class Contact {
 	}
 
 	/**
+	 * Gets the Phone object.
+	 * 
 	 * @return the phone
 	 */
 	public Phone getPhone() {
@@ -88,6 +113,8 @@ public class Contact {
 	}
 
 	/**
+	 * Returns the Email object.
+	 * 
 	 * @return the email
 	 */
 	public EmailAddress getEmail() {
@@ -95,6 +122,8 @@ public class Contact {
 	}
 
 	/**
+	 * Returns the notes about the contact.
+	 * 
 	 * @return the notes
 	 */
 	public String getNotes() {
@@ -102,12 +131,21 @@ public class Contact {
 	}
 
 	/**
+	 * Sets the notes for the contact.
+	 * 
 	 * @param notes the notes to set
 	 */
 	public void setNotes(String notes) {
 		this.notes = optional(notes);
 	}
 
+	/**
+	 * Sets certain fields as optional. Determines if the field is null; if so,
+	 * it returns blank text to be displayed instead.
+	 * 
+	 * @param string the String to be determined whether the field is null
+	 * @return the String if not null, or blank text if so
+	 */
 	public String optional(String string) {
 		if (string == null)
 			return "";
@@ -115,8 +153,14 @@ public class Contact {
 			return string;
 	}
 
+	/**
+	 * Overrides the toString to the following format:<br>
+	 * {ContactType}, {Person}, {Address}, {Phone}, {EmailAddress}. {notes}
+	 */
 	@Override
 	public String toString() {
-		return String.format("%s %s %s %s %s %s", type, person, address, phone, email, notes);
+		return String.format("%s %s %s %s %s %s", type, person, address, phone,
+				email, notes);
 	}
+
 }

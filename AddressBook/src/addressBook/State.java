@@ -1,6 +1,8 @@
 package addressBook;
 
 /**
+ * An enum containing the list of states.
+ * 
  * @author Adam Ross
  *
  */

@@ -1,6 +1,8 @@
 package addressBook;
 
 /**
+ * An enum containing titles that the Person class uses.
+ * 
  * @author Adam Ross
  *
  */
