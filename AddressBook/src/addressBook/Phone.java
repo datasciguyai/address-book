@@ -1,6 +1,8 @@
 package addressBook;
 
 /**
+ * Represents phone numbers, which is used to construct a Contact object.
+ * 
  * @author Adam Ross
  *
  */
@@ -10,32 +12,21 @@ public class Phone {
 	private String phoneOffice;
 
 	/**
-	 * @param phoneHome
-	 * @param phoneMobile
-	 * @param phoneOffice
+	 * Constructs a Phone object with phone numbers.
+	 * 
+	 * @param phoneHome   the contact's home phone number
+	 * @param phoneMobile the contact's mobile number
+	 * @param phoneOffice the contact's office number
 	 */
 	public Phone(String phoneHome, String phoneMobile, String phoneOffice) {
-//		if (phoneHome == null)
-//			this.phoneHome = "";
-//		else
-//			this.phoneHome = toPhoneNumber(phoneHome);
-
-//		if (phoneMobile == null)
-//			this.phoneMobile = "";
-//		else
-//			this.phoneMobile = toPhoneNumber(phoneMobile);
-
-//		if (phoneOffice == null)
-//			this.phoneOffice = "";
-//		else
-//			this.phoneOffice = toPhoneNumber(phoneOffice);
-
 		this.phoneHome = optional(phoneHome);
 		this.phoneMobile = optional(phoneMobile);
 		this.phoneOffice = optional(phoneOffice);
 	}
 
 	/**
+	 * Gets the home phone number.
+	 * 
 	 * @return the phoneHome
 	 */
 	public String getPhoneHome() {
@@ -43,6 +34,8 @@ public class Phone {
 	}
 
 	/**
+	 * Sets the home phone number.
+	 * 
 	 * @param phoneHome the phoneHome to set
 	 */
 	public void setPhoneHome(String phoneHome) {
@@ -50,6 +43,8 @@ public class Phone {
 	}
 
 	/**
+	 * Gets the mobile phone number.
+	 * 
 	 * @return the phoneMobile
 	 */
 	public String getPhoneMobile() {
@@ -57,6 +52,8 @@ public class Phone {
 	}
 
 	/**
+	 * Sets the mobile phone number.
+	 * 
 	 * @param phoneMobile the phoneMobile to set
 	 */
 	public void setPhoneMobile(String phoneMobile) {
@@ -64,6 +61,8 @@ public class Phone {
 	}
 
 	/**
+	 * Gets the office phone number.
+	 * 
 	 * @return the phoneOffice
 	 */
 	public String getPhoneOffice() {
@@ -71,27 +70,49 @@ public class Phone {
 	}
 
 	/**
+	 * Sets the office phone number.
+	 * 
 	 * @param phoneOffice the phoneOffice to set
 	 */
 	public void setPhoneOffice(String phoneOffice) {
 		this.phoneOffice = optional(phoneOffice);
 	}
 
+	/**
+	 * * Sets certain fields as optional. Determines if the field is null; if
+	 * so, it returns blank text to be displayed instead.
+	 * 
+	 * @param string the String to be determined whether the field is null
+	 * @return the String if not null, or blank text if so
+	 */
 	public String optional(String string) {
-		if (string.isEmpty())
+		if (string == null)
 			return "";
 		else
 			return toPhoneNumber(string);
 	}
 
+	/**
+	 * Modifies each phone number to display in the following format:
+	 * (XXX)XXX-XXXX
+	 * 
+	 * @param number
+	 * @return
+	 */
 	public String toPhoneNumber(String number) {
-		number = "(" + number.substring(0, 3) + ")" + number.substring(3, 6) + "-" + number.substring(6);
+		number = "(" + number.substring(0, 3) + ")" + number.substring(3, 6)
+				+ "-" + number.substring(6);
 
 		return number;
 	}
 
+	/**
+	 * Overrides the toString method to display each phone number after it has
+	 * been formatted.
+	 */
 	@Override
 	public String toString() {
 		return String.format("%s %s %s", phoneHome, phoneMobile, phoneOffice);
 	}
+
 }

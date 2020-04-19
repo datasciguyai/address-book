@@ -1,6 +1,8 @@
 package addressBook;
 
 /**
+ * Represents an address, which is used in the construction of a Contact object.
+ * 
  * @author Adam Ross
  *
  */
@@ -12,13 +14,16 @@ public class Address {
 	private int zip;
 
 	/**
-	 * @param address1
-	 * @param address2
-	 * @param city
-	 * @param state
-	 * @param zip
+	 * Initializes the Address object.
+	 * 
+	 * @param address1 address line 1
+	 * @param address2 address line 2
+	 * @param city     the address' city
+	 * @param state    the address' state
+	 * @param zip      the address' zip code
 	 */
-	public Address(String address1, String address2, String city, State state, int zip) {
+	public Address(String address1, String address2, String city, State state,
+			int zip) {
 		this.address1 = address1;
 
 		if (address2 == null)
@@ -32,13 +37,17 @@ public class Address {
 	}
 
 	/**
-	 * @return the address1
+	 * Gets the first line of the address.
+	 * 
+	 * @return address1
 	 */
 	public String getAddress1() {
 		return address1;
 	}
 
 	/**
+	 * Sets the first line of the of address.
+	 * 
 	 * @param address1 the address1 to set
 	 */
 	public void setAddress1(String address1) {
@@ -46,6 +55,8 @@ public class Address {
 	}
 
 	/**
+	 * Gets the second line of the address.
+	 * 
 	 * @return the address2
 	 */
 	public String getAddress2() {
@@ -53,6 +64,8 @@ public class Address {
 	}
 
 	/**
+	 * Sets the second line of the address.
+	 * 
 	 * @param address2 the address2 to set
 	 */
 	public void setAddress2(String address2) {
@@ -63,6 +76,8 @@ public class Address {
 	}
 
 	/**
+	 * Gets the city.
+	 * 
 	 * @return the city
 	 */
 	public String getCity() {
@@ -70,6 +85,8 @@ public class Address {
 	}
 
 	/**
+	 * Sets the city.
+	 * 
 	 * @param city the city to set
 	 */
 	public void setCity(String city) {
@@ -77,6 +94,8 @@ public class Address {
 	}
 
 	/**
+	 * Gets the state.
+	 * 
 	 * @return the state
 	 */
 	public State getState() {
@@ -84,6 +103,8 @@ public class Address {
 	}
 
 	/**
+	 * Sets the state.
+	 * 
 	 * @param state the state to set
 	 */
 	public void setState(State state) {
@@ -91,6 +112,8 @@ public class Address {
 	}
 
 	/**
+	 * Returns the zip code.
+	 * 
 	 * @return the zip
 	 */
 	public int getZip() {
@@ -98,14 +121,25 @@ public class Address {
 	}
 
 	/**
+	 * Sets the zip code.
+	 * 
 	 * @param zip the zip to set
 	 */
 	public void setZip(int zip) {
 		this.zip = zip;
 	}
 
+	/**
+	 * Formats the addres to the following format:<br>
+	 * {address1}<br>
+	 * {address2}<br>
+	 * {city}, {state} {zip}
+	 * 
+	 */
 	@Override
 	public String toString() {
-		return String.format("%s %s %s %s %d", address1, address2, city, state.toString(), zip);
+		return String.format("%s %s %s %s %d", address1, address2, city,
+				state.toString(), zip);
 	}
+
 }

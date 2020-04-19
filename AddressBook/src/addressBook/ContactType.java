@@ -1,10 +1,11 @@
 package addressBook;
 
 /**
+ * An enum containing different contact types the Contact class uses.
  * 
  * @author Adam Ross
  *
  */
 public enum ContactType {
-	PROFESSIONAL, SCHOOL, PERSONAL
+	PERSONAL, PROFESSIONAL, SCHOOL
 }
