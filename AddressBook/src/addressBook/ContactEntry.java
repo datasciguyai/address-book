@@ -42,12 +42,14 @@ public class ContactEntry extends JFrame {
 	private JComboBox<ContactType> comboBoxType;
 	private JComboBox<Title> comboBoxTitle;
 	private JComboBox<State> comboBoxState;
+	int id;
+	Contact contact;
 
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					ContactEntry frame = new ContactEntry();
+					ContactEntry frame = new ContactEntry(0);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -59,7 +61,9 @@ public class ContactEntry extends JFrame {
 	/**
 	 * Creates the frame and adds components.
 	 */
-	public ContactEntry() {
+	public ContactEntry(int id) {
+		this.id = id;
+		
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 600, 600);
 		setResizable(false);
@@ -80,6 +84,34 @@ public class ContactEntry extends JFrame {
 
 		JButton btnCancel = newBtnCancel();
 		buttonPanel.add(btnCancel);
+
+		if (id != 0) {
+			Crud.retrieveContact().forEach(c -> {
+				if (c.getId() == id) {
+					contact = c;
+				}
+			});
+			populateForm();
+		}
+	}
+
+	private void populateForm() {
+		comboBoxType.setSelectedItem(contact.getType());
+		comboBoxTitle.setSelectedItem(contact.getPerson().getTitle());
+		textFieldCompany.setText(contact.getPerson().getCompany());
+		textFieldFirstName.setText(contact.getPerson().getFirstName());
+		textFieldMiddleName.setText(contact.getPerson().getMiddleName());
+		textFieldLastName.setText(contact.getPerson().getLastName());
+		textFieldAddress1.setText(contact.getAddress().getAddress1());
+		textFieldAddress2.setText(contact.getAddress().getAddress2());
+		textFieldCity.setText(contact.getAddress().getCity());
+		comboBoxState.setSelectedItem(contact.getAddress().getState());
+		textFieldZip.setText(String.valueOf(contact.getAddress().getZip()));
+		textFieldHomePhone.setText(contact.getPhone().getPhoneHome());
+		textFieldMobilePhone.setText(contact.getPhone().getPhoneMobile());
+		textFieldOfficePhone.setText(contact.getPhone().getPhoneOffice());
+		textFieldEmail.setText(contact.getEmail().getEmail());
+		textAreaNotes.setText(contact.getNotes());
 	}
 
 	private JPanel newContactEntryPanel() {
@@ -280,20 +312,38 @@ public class ContactEntry extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				int zip = 0;
 
-				if (textFieldFirstName.getText().isEmpty()) {
-					JOptionPane.showMessageDialog(null, "Please enter a minimum of a first name.");
-				} else {
-					if (!textFieldZip.getText().isEmpty()) {
-						zip = Integer.valueOf(textFieldZip.getText());
+				if (id == 0) {
+					if (textFieldFirstName.getText().isEmpty()) {
+						JOptionPane.showMessageDialog(null, "Please enter a minimum of a first name.");
+					} else {
+						if (!textFieldZip.getText().isEmpty()) {
+							zip = Integer.valueOf(textFieldZip.getText());
+						}
+						Crud.createContact((ContactType) comboBoxType.getSelectedItem(),
+								(Title) comboBoxTitle.getSelectedItem(), textFieldCompany.getText(),
+								textFieldFirstName.getText(), textFieldMiddleName.getText(),
+								textFieldLastName.getText(), textFieldAddress1.getText(), textFieldAddress2.getText(),
+								textFieldCity.getText(), (State) comboBoxState.getSelectedItem(), zip,
+								textFieldHomePhone.getText(), textFieldMobilePhone.getText(),
+								textFieldOfficePhone.getText(), textFieldEmail.getText(), textAreaNotes.getText());
+						closeContactEntry();
 					}
-					Crud.createContact((ContactType) comboBoxType.getSelectedItem(),
-							(Title) comboBoxTitle.getSelectedItem(), textFieldCompany.getText(),
-							textFieldFirstName.getText(), textFieldMiddleName.getText(), textFieldLastName.getText(),
-							textFieldAddress1.getText(), textFieldAddress2.getText(), textFieldCity.getText(),
-							(State) comboBoxState.getSelectedItem(), zip, textFieldHomePhone.getText(),
-							textFieldMobilePhone.getText(), textFieldOfficePhone.getText(), textFieldEmail.getText(),
-							textAreaNotes.getText());
-					closeContactEntry();
+				} else {
+					if (textFieldFirstName.getText().isEmpty()) {
+						JOptionPane.showMessageDialog(null, "Please enter a minimum of a first name.");
+					} else {
+						if (!textFieldZip.getText().isEmpty()) {
+							zip = Integer.valueOf(textFieldZip.getText());
+						}
+						Crud.updateContact(id, (ContactType) comboBoxType.getSelectedItem(),
+								(Title) comboBoxTitle.getSelectedItem(), textFieldCompany.getText(),
+								textFieldFirstName.getText(), textFieldMiddleName.getText(),
+								textFieldLastName.getText(), textFieldAddress1.getText(), textFieldAddress2.getText(),
+								textFieldCity.getText(), (State) comboBoxState.getSelectedItem(), zip,
+								textFieldHomePhone.getText(), textFieldMobilePhone.getText(),
+								textFieldOfficePhone.getText(), textFieldEmail.getText(), textAreaNotes.getText());
+						closeContactEntry();
+					}
 				}
 			}
 		});

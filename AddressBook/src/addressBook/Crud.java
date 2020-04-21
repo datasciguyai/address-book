@@ -39,9 +39,33 @@ public class Crud {
 		return contactList;
 	}
 
-//	protected static void updateContact() {
-//		// TODO Implement contact update functionality
-//	}
+	protected static void updateContact(int id, ContactType type, Title title, String company, String firstName,
+			String middleName, String lastName, String address1, String address2, String city, State state, int zip,
+			String phoneHome, String phoneMobile, String phoneOffice, String email, String notes) {
+		
+		contactList.forEach(c -> {
+			if (c.getId() == id) {
+				c.setType(type);
+				c.getPerson().setTitle(title);
+				c.getPerson().setCompany(company);
+				c.getPerson().setFirstName(firstName);
+				c.getPerson().setMiddleName(middleName);
+				c.getPerson().setLastName(lastName);
+				c.getAddress().setAddress1(address1);
+				c.getAddress().setAddress2(address2);
+				c.getAddress().setCity(city);
+				c.getAddress().setState(state);
+				c.getAddress().setZip(zip);
+				c.getPhone().setPhoneHome(phoneHome);
+				c.getPhone().setPhoneMobile(phoneMobile);
+				c.getPhone().setPhoneOffice(phoneOffice);
+				c.getEmail().setEmail(email);
+				c.setNotes(notes);
+			}
+		});
+		
+		contactListFrame.updateContactDetails();
+	}
 
 	protected static void deleteContact(int id) {
 		contactList.removeIf(f -> f.getId() == id);

@@ -172,7 +172,7 @@ public class ContactList extends JFrame {
 			 */
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				ContactEntry addContactFrame = new ContactEntry();
+				ContactEntry addContactFrame = new ContactEntry(0);
 				addContactFrame.setVisible(true);
 			}
 		});
@@ -181,19 +181,17 @@ public class ContactList extends JFrame {
 
 	private JButton newBtnEditContact() {
 		JButton btnEditContact = new JButton("Edit");
+		btnEditContact.addActionListener(new ActionListener() {
 
-		// TODO Implement contact edit functionality
-//		btnEditContact.addActionListener(new ActionListener() {
-//
-//			/**
-//			 * Opens a contact entry form that allows the user to edit a contact.
-//			 */
-//			@Override
-//			public void actionPerformed(ActionEvent e) {
-//				ContactEntry editContactFrame = new ContactEntry();
-//				editContactFrame.setVisible(true);
-//			}
-//		});
+			/**
+			 * Opens a contact entry form that allows the user to edit a contact.
+			 */
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				ContactEntry editContactFrame = new ContactEntry(id);
+				editContactFrame.setVisible(true);
+			}
+		});
 		return btnEditContact;
 	}
 
@@ -233,7 +231,10 @@ public class ContactList extends JFrame {
 		return btnDeleteContact;
 	}
 
-	private void updateContactDetails() {
+	/**
+	 * 
+	 */
+	public void updateContactDetails() {
 		String zip = null;
 
 		if (contactList.getModel().getSize() == 0) {
@@ -255,11 +256,12 @@ public class ContactList extends JFrame {
 			lblEmail.setText("");
 			lblNotes.setText("");
 		} else {
-
 			id = Crud.retrieveContact().get(contactList.getSelectedIndex()).getId();
-
+			
 			if (Crud.retrieveContact().get(contactList.getSelectedIndex()).getAddress().getZip() == 0) {
 				zip = "";
+			} else {
+				zip = String.valueOf(Crud.retrieveContact().get(contactList.getSelectedIndex()).getAddress().getZip());
 			}
 
 			lblType.setText(Crud.retrieveContact().get(contactList.getSelectedIndex()).getType().toString());
@@ -394,7 +396,6 @@ public class ContactList extends JFrame {
 	}
 
 	private void createPlaceholders() {
-
 		lblType = new JLabel("");
 		lblTitle = new JLabel("");
 		lblCompany = new JLabel("");
