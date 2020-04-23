@@ -1,5 +1,7 @@
 package addressBook;
 
+import java.io.FileNotFoundException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -33,9 +35,10 @@ public class Crud {
 
 		contactList.add(new Contact(type, person, address, phone, emailAddress, notes));
 		contactListFrame.addNewContact(contactList.get(contactList.size() - 1));
+		printToFile();
 	}
 
-	protected static List<Contact> retrieveContact() {
+	protected static List<Contact> retrieveContacts() {
 		return contactList;
 	}
 
@@ -73,5 +76,14 @@ public class Crud {
 
 	protected static void setContactList(ContactList contactList) {
 		Crud.contactListFrame = contactList;
+	}
+	
+	protected static void printToFile() {
+		String fileContacts = "src/addressBook/Contacts/Contacts.csv";
+		try (PrintWriter writer = new PrintWriter(fileContacts)) {
+			writer.println(retrieveContacts());
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
 	}
 }

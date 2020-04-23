@@ -256,41 +256,41 @@ public class ContactList extends JFrame {
 			lblEmail.setText("");
 			lblNotes.setText("");
 		} else {
-			id = Crud.retrieveContact().get(contactList.getSelectedIndex()).getId();
+			id = Crud.retrieveContacts().get(contactList.getSelectedIndex()).getId();
 			
-			if (Crud.retrieveContact().get(contactList.getSelectedIndex()).getAddress().getZip() == 0) {
+			if (Crud.retrieveContacts().get(contactList.getSelectedIndex()).getAddress().getZip() == 0) {
 				zip = "";
 			} else {
-				zip = String.valueOf(Crud.retrieveContact().get(contactList.getSelectedIndex()).getAddress().getZip());
+				zip = String.valueOf(Crud.retrieveContacts().get(contactList.getSelectedIndex()).getAddress().getZip());
 			}
 
-			lblType.setText(Crud.retrieveContact().get(contactList.getSelectedIndex()).getType().toString());
+			lblType.setText(Crud.retrieveContacts().get(contactList.getSelectedIndex()).getType().toString());
 			lblTitle.setText(
-					Crud.retrieveContact().get(contactList.getSelectedIndex()).getPerson().getTitle().toString());
-			lblCompany.setText(Crud.retrieveContact().get(contactList.getSelectedIndex()).getPerson().getCompany());
+					Crud.retrieveContacts().get(contactList.getSelectedIndex()).getPerson().getTitle().toString());
+			lblCompany.setText(Crud.retrieveContacts().get(contactList.getSelectedIndex()).getPerson().getCompany());
 			lblFirstName
-					.setText(Crud.retrieveContact().get(contactList.getSelectedIndex()).getPerson().getFirstName());
+					.setText(Crud.retrieveContacts().get(contactList.getSelectedIndex()).getPerson().getFirstName());
 			lblMiddleName.setText(
-					Crud.retrieveContact().get(contactList.getSelectedIndex()).getPerson().getMiddleName());
+					Crud.retrieveContacts().get(contactList.getSelectedIndex()).getPerson().getMiddleName());
 			lblLastName
-					.setText(Crud.retrieveContact().get(contactList.getSelectedIndex()).getPerson().getLastName());
+					.setText(Crud.retrieveContacts().get(contactList.getSelectedIndex()).getPerson().getLastName());
 			lblAddress1
-					.setText(Crud.retrieveContact().get(contactList.getSelectedIndex()).getAddress().getAddress1());
+					.setText(Crud.retrieveContacts().get(contactList.getSelectedIndex()).getAddress().getAddress1());
 			lblAddress2
-					.setText(Crud.retrieveContact().get(contactList.getSelectedIndex()).getAddress().getAddress2());
-			lblCity.setText(Crud.retrieveContact().get(contactList.getSelectedIndex()).getAddress().getCity());
+					.setText(Crud.retrieveContacts().get(contactList.getSelectedIndex()).getAddress().getAddress2());
+			lblCity.setText(Crud.retrieveContacts().get(contactList.getSelectedIndex()).getAddress().getCity());
 			lblState.setText(
-					Crud.retrieveContact().get(contactList.getSelectedIndex()).getAddress().getState().toString());
+					Crud.retrieveContacts().get(contactList.getSelectedIndex()).getAddress().getState().toString());
 			lblZip.setText(zip);
-			lblCity.setText(Crud.retrieveContact().get(contactList.getSelectedIndex()).getAddress().getCity());
+			lblCity.setText(Crud.retrieveContacts().get(contactList.getSelectedIndex()).getAddress().getCity());
 			lblHomePhone
-					.setText(Crud.retrieveContact().get(contactList.getSelectedIndex()).getPhone().getPhoneHome());
+					.setText(Crud.retrieveContacts().get(contactList.getSelectedIndex()).getPhone().getPhoneHome());
 			lblMobilePhone.setText(
-					Crud.retrieveContact().get(contactList.getSelectedIndex()).getPhone().getPhoneMobile());
+					Crud.retrieveContacts().get(contactList.getSelectedIndex()).getPhone().getPhoneMobile());
 			lblOfficePhone.setText(
-					Crud.retrieveContact().get(contactList.getSelectedIndex()).getPhone().getPhoneOffice());
-			lblEmail.setText(Crud.retrieveContact().get(contactList.getSelectedIndex()).getEmail().getEmail());
-			lblNotes.setText(Crud.retrieveContact().get(contactList.getSelectedIndex()).getNotes());
+					Crud.retrieveContacts().get(contactList.getSelectedIndex()).getPhone().getPhoneOffice());
+			lblEmail.setText(Crud.retrieveContacts().get(contactList.getSelectedIndex()).getEmail().getEmail());
+			lblNotes.setText(Crud.retrieveContacts().get(contactList.getSelectedIndex()).getNotes());
 		}
 	}
 

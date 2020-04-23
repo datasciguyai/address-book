@@ -86,7 +86,7 @@ public class ContactEntry extends JFrame {
 		buttonPanel.add(btnCancel);
 
 		if (id != 0) {
-			Crud.retrieveContact().forEach(c -> {
+			Crud.retrieveContacts().forEach(c -> {
 				if (c.getId() == id) {
 					contact = c;
 				}
