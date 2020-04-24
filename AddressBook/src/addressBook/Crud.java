@@ -127,50 +127,6 @@ public class Crud {
 		Crud.contactListFrame = contactList;
 	}
 
-//	protected static void readFromFile() {
-//		if (contactList.size() == 0) {
-//			String fileName = "src/addressBook/Contacts/Contacts.csv";
-//			try (BufferedReader reader = new BufferedReader(
-//					new FileReader(fileName))) {
-//				while (reader.ready()) {
-//					String line = reader.readLine();
-//					String[] contactInfo = line.split(",");
-//					int id = Integer.parseInt(contactInfo[0]);
-//					ContactType type = Enum.valueOf(ContactType.class,
-//							contactInfo[1]);
-//					Title title = Enum.valueOf(Title.class, contactInfo[2]);
-//					String company = contactInfo[3];
-//					String firstName = contactInfo[4];
-//					String middleName = contactInfo[5];
-//					String lastName = contactInfo[6];
-//					String address1 = contactInfo[7];
-//					String address2 = contactInfo[8];
-//					String city = contactInfo[9];
-//					State state = Enum.valueOf(State.class, contactInfo[10]);
-//					int zip = Integer.parseInt(contactInfo[11]);
-//					String phoneHome = contactInfo[12];
-//					String phoneMobile = contactInfo[13];
-//					String phoneOffice = contactInfo[14];
-//					String email = contactInfo[15];
-//					String notes = contactInfo[16];
-//
-//					contactList.add(new Contact(type,
-//							new Person(title, firstName, middleName, lastName,
-//									company),
-//							new Address(address1, address2, city, state, zip),
-//							new Phone(phoneHome, phoneMobile, phoneOffice),
-//							new EmailAddress(email), notes));
-//
-//				}
-//
-//			} catch (FileNotFoundException e) {
-//				e.printStackTrace();
-//			} catch (IOException e) {
-//				e.printStackTrace();
-//			}
-//		}
-//	}
-
 	protected static void printToFile() {
 		String fileContacts = "src/addressBook/Contacts/Contacts.csv";
 		try (PrintWriter writer = new PrintWriter(fileContacts)) {

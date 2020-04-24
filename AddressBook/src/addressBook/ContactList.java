@@ -91,6 +91,8 @@ public class ContactList extends JFrame {
 
 		JPanel contactDetailsPanel = newContactDetailsPanel();
 		contentPane.add(contactDetailsPanel, BorderLayout.EAST);
+		List<Contact> contacts = Crud.retrieveContacts();
+		contacts.forEach(el -> addNewContact(el));
 	}
 
 	private JPanel newContactListPanel() {
@@ -126,9 +128,7 @@ public class ContactList extends JFrame {
 
 	private JList<String> newContactList() {
 		listModel = new DefaultListModel<String>();
-		List<Contact> contacts = Crud.retrieveContacts();
 		contactList = new JList<String>(listModel);
-//		contacts.forEach(this::addNewContact);
 		contactList.addMouseListener(new MouseAdapter() {
 
 			/**
