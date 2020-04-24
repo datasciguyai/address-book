@@ -1,29 +1,30 @@
 package addressBook;
 
+import java.awt.BorderLayout;
+import java.awt.Component;
+import java.awt.Dimension;
 import java.awt.EventQueue;
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
+import java.awt.Font;
+import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.util.List;
+
 import javax.swing.BoxLayout;
 import javax.swing.DefaultListModel;
+import javax.swing.JButton;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
-
-import java.awt.Component;
-import javax.swing.JButton;
-import java.awt.GridLayout;
-import javax.swing.border.EtchedBorder;
+import javax.swing.JPanel;
 import javax.swing.SpringLayout;
-import java.awt.BorderLayout;
-import java.awt.Dimension;
 import javax.swing.SwingConstants;
 import javax.swing.WindowConstants;
-import java.awt.Font;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
+import javax.swing.border.EmptyBorder;
+import javax.swing.border.EtchedBorder;
 
 /**
  * Implements an address book application that presents the user with a list of
@@ -96,7 +97,8 @@ public class ContactList extends JFrame {
 		JPanel contactPanel = new JPanel();
 		contactPanel.setBorder(new EmptyBorder(0, 10, 10, 10));
 		contactPanel.setAlignmentY(Component.TOP_ALIGNMENT);
-		contactPanel.setLayout(new BoxLayout(contactPanel, BoxLayout.PAGE_AXIS));
+		contactPanel
+				.setLayout(new BoxLayout(contactPanel, BoxLayout.PAGE_AXIS));
 
 		JLabel lblContacts = new JLabel("Contacts");
 		lblContacts.setFont(new Font("Tahoma", Font.BOLD, 11));
@@ -105,7 +107,8 @@ public class ContactList extends JFrame {
 		contactPanel.add(lblContacts);
 
 		JPanel contactListPanel = new JPanel();
-		contactListPanel.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
+		contactListPanel
+				.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
 		contactPanel.add(contactListPanel);
 		contactListPanel.setLayout(new GridLayout(0, 1, 0, 0));
 
@@ -123,12 +126,14 @@ public class ContactList extends JFrame {
 
 	private JList<String> newContactList() {
 		listModel = new DefaultListModel<String>();
+		List<Contact> contacts = Crud.retrieveContacts();
 		contactList = new JList<String>(listModel);
+//		contacts.forEach(this::addNewContact);
 		contactList.addMouseListener(new MouseAdapter() {
 
 			/**
-			 * Updates the labels in <code>contactDetailsPanel</code> when the user clicks
-			 * on a contact.
+			 * Updates the labels in <code>contactDetailsPanel</code> when the
+			 * user clicks on a contact.
 			 */
 			@Override
 			public void mouseReleased(MouseEvent e) {
@@ -140,7 +145,8 @@ public class ContactList extends JFrame {
 	}
 
 	private JLabel newTotalContacts() {
-		lblTotalContacts = new JLabel("Total Contacts: " + contactList.getModel().getSize());
+		lblTotalContacts = new JLabel(
+				"Total Contacts: " + contactList.getModel().getSize());
 		lblTotalContacts.setBorder(new EmptyBorder(10, 0, 10, 0));
 		lblTotalContacts.setAlignmentX(Component.CENTER_ALIGNMENT);
 		return lblTotalContacts;
@@ -168,7 +174,8 @@ public class ContactList extends JFrame {
 		btnAddContact.addActionListener(new ActionListener() {
 
 			/**
-			 * Opens a contact entry form that allows the user to add a new contact.
+			 * Opens a contact entry form that allows the user to add a new
+			 * contact.
 			 */
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -184,7 +191,8 @@ public class ContactList extends JFrame {
 		btnEditContact.addActionListener(new ActionListener() {
 
 			/**
-			 * Opens a contact entry form that allows the user to edit a contact.
+			 * Opens a contact entry form that allows the user to edit a
+			 * contact.
 			 */
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -201,28 +209,37 @@ public class ContactList extends JFrame {
 
 			/**
 			 * Deletes a contact.<br>
-			 * The contact is removed from <code>listModel</code>, <code>contactList</code>,
-			 * and the <code>ArrayList</code> in the <code>Contacts</code> class.
+			 * The contact is removed from <code>listModel</code>,
+			 * <code>contactList</code>, and the <code>ArrayList</code> in the
+			 * <code>Contacts</code> class.
 			 */
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				if (contactList.getModel().getSize() > 0) {
-					if (JOptionPane.showConfirmDialog(null, "Delete this contact?", "Delete Contact",
+					if (JOptionPane.showConfirmDialog(null,
+							"Delete this contact?", "Delete Contact",
 							JOptionPane.OK_CANCEL_OPTION) == 0) {
 						int selectedIndex = contactList.getSelectedIndex();
 						if (contactList.getModel().getSize() > 0) {
 							if (selectedIndex == 0) {
 								Crud.deleteContact(id);
 								contactList.setSelectedIndex(selectedIndex + 1);
-								lblFirstName.setText(listModel.getElementAt(contactList.getSelectedIndex()).toString());
+								lblFirstName.setText(listModel
+										.getElementAt(
+												contactList.getSelectedIndex())
+										.toString());
 							} else {
 								Crud.deleteContact(id);
 								contactList.setSelectedIndex(selectedIndex - 1);
-								lblFirstName.setText(listModel.getElementAt(contactList.getSelectedIndex()).toString());
+								lblFirstName.setText(listModel
+										.getElementAt(
+												contactList.getSelectedIndex())
+										.toString());
 							}
 						}
 						listModel.remove(selectedIndex);
-						lblTotalContacts.setText("Total Contacts: " + contactList.getModel().getSize());
+						lblTotalContacts.setText("Total Contacts: "
+								+ contactList.getModel().getSize());
 					}
 					updateContactDetails();
 				}
@@ -256,41 +273,64 @@ public class ContactList extends JFrame {
 			lblEmail.setText("");
 			lblNotes.setText("");
 		} else {
-			id = Crud.retrieveContacts().get(contactList.getSelectedIndex()).getId();
-			
-			if (Crud.retrieveContacts().get(contactList.getSelectedIndex()).getAddress().getZip() == 0) {
+			id = Crud.retrieveContacts().get(contactList.getSelectedIndex())
+					.getId();
+
+			if (Crud.retrieveContacts().get(contactList.getSelectedIndex())
+					.getAddress().getZip() == 0) {
 				zip = "";
 			} else {
-				zip = String.valueOf(Crud.retrieveContacts().get(contactList.getSelectedIndex()).getAddress().getZip());
+				zip = String.valueOf(Crud.retrieveContacts()
+						.get(contactList.getSelectedIndex()).getAddress()
+						.getZip());
 			}
 
-			lblType.setText(Crud.retrieveContacts().get(contactList.getSelectedIndex()).getType().toString());
+			lblType.setText(Crud.retrieveContacts()
+					.get(contactList.getSelectedIndex()).getType().toString());
 			lblTitle.setText(
-					Crud.retrieveContacts().get(contactList.getSelectedIndex()).getPerson().getTitle().toString());
-			lblCompany.setText(Crud.retrieveContacts().get(contactList.getSelectedIndex()).getPerson().getCompany());
-			lblFirstName
-					.setText(Crud.retrieveContacts().get(contactList.getSelectedIndex()).getPerson().getFirstName());
+					Crud.retrieveContacts().get(contactList.getSelectedIndex())
+							.getPerson().getTitle().toString());
+			lblCompany.setText(
+					Crud.retrieveContacts().get(contactList.getSelectedIndex())
+							.getPerson().getCompany());
+			lblFirstName.setText(
+					Crud.retrieveContacts().get(contactList.getSelectedIndex())
+							.getPerson().getFirstName());
 			lblMiddleName.setText(
-					Crud.retrieveContacts().get(contactList.getSelectedIndex()).getPerson().getMiddleName());
-			lblLastName
-					.setText(Crud.retrieveContacts().get(contactList.getSelectedIndex()).getPerson().getLastName());
-			lblAddress1
-					.setText(Crud.retrieveContacts().get(contactList.getSelectedIndex()).getAddress().getAddress1());
-			lblAddress2
-					.setText(Crud.retrieveContacts().get(contactList.getSelectedIndex()).getAddress().getAddress2());
-			lblCity.setText(Crud.retrieveContacts().get(contactList.getSelectedIndex()).getAddress().getCity());
+					Crud.retrieveContacts().get(contactList.getSelectedIndex())
+							.getPerson().getMiddleName());
+			lblLastName.setText(
+					Crud.retrieveContacts().get(contactList.getSelectedIndex())
+							.getPerson().getLastName());
+			lblAddress1.setText(
+					Crud.retrieveContacts().get(contactList.getSelectedIndex())
+							.getAddress().getAddress1());
+			lblAddress2.setText(
+					Crud.retrieveContacts().get(contactList.getSelectedIndex())
+							.getAddress().getAddress2());
+			lblCity.setText(
+					Crud.retrieveContacts().get(contactList.getSelectedIndex())
+							.getAddress().getCity());
 			lblState.setText(
-					Crud.retrieveContacts().get(contactList.getSelectedIndex()).getAddress().getState().toString());
+					Crud.retrieveContacts().get(contactList.getSelectedIndex())
+							.getAddress().getState().toString());
 			lblZip.setText(zip);
-			lblCity.setText(Crud.retrieveContacts().get(contactList.getSelectedIndex()).getAddress().getCity());
-			lblHomePhone
-					.setText(Crud.retrieveContacts().get(contactList.getSelectedIndex()).getPhone().getPhoneHome());
+			lblCity.setText(
+					Crud.retrieveContacts().get(contactList.getSelectedIndex())
+							.getAddress().getCity());
+			lblHomePhone.setText(
+					Crud.retrieveContacts().get(contactList.getSelectedIndex())
+							.getPhone().getPhoneHome());
 			lblMobilePhone.setText(
-					Crud.retrieveContacts().get(contactList.getSelectedIndex()).getPhone().getPhoneMobile());
+					Crud.retrieveContacts().get(contactList.getSelectedIndex())
+							.getPhone().getPhoneMobile());
 			lblOfficePhone.setText(
-					Crud.retrieveContacts().get(contactList.getSelectedIndex()).getPhone().getPhoneOffice());
-			lblEmail.setText(Crud.retrieveContacts().get(contactList.getSelectedIndex()).getEmail().getEmail());
-			lblNotes.setText(Crud.retrieveContacts().get(contactList.getSelectedIndex()).getNotes());
+					Crud.retrieveContacts().get(contactList.getSelectedIndex())
+							.getPhone().getPhoneOffice());
+			lblEmail.setText(Crud.retrieveContacts()
+					.get(contactList.getSelectedIndex()).getEmail().getEmail());
+			lblNotes.setText(Crud.retrieveContacts()
+					.get(contactList.getSelectedIndex()).getNotes());
 		}
 	}
 
@@ -337,56 +377,71 @@ public class ContactList extends JFrame {
 
 		createPlaceholders();
 
-		JLabel[] labels = { lblTitleLabel, lblCompanyLabel, lblFirstNameLabel, lblMiddleNameLabel, lblLastNameLabel,
-				lblAddress1Label, lblAddress2Label, lblCityLabel, lblHomePhoneLabel, lblMobilePhoneLabel,
-				lblOfficePhoneLabel, lblEmailLabel, lblNotesLabel };
+		JLabel[] labels = { lblTitleLabel, lblCompanyLabel, lblFirstNameLabel,
+				lblMiddleNameLabel, lblLastNameLabel, lblAddress1Label,
+				lblAddress2Label, lblCityLabel, lblHomePhoneLabel,
+				lblMobilePhoneLabel, lblOfficePhoneLabel, lblEmailLabel,
+				lblNotesLabel };
 
-		JLabel[] placeholders = { lblType, lblTitle, lblCompany, lblFirstName, lblMiddleName, lblLastName, lblAddress1,
-				lblAddress2, lblCity, lblHomePhone, lblMobilePhone, lblOfficePhone, lblEmail, lblNotes };
+		JLabel[] placeholders = { lblType, lblTitle, lblCompany, lblFirstName,
+				lblMiddleName, lblLastName, lblAddress1, lblAddress2, lblCity,
+				lblHomePhone, lblMobilePhone, lblOfficePhone, lblEmail,
+				lblNotes };
 
 		// Positions and adds lblTypeLabel
-		sl_contactDetailsPanel.putConstraint(SpringLayout.NORTH, lblTypeLabel, 35, SpringLayout.NORTH,
-				contactDetailsPanel);
-		sl_contactDetailsPanel.putConstraint(SpringLayout.WEST, lblTypeLabel, 10, SpringLayout.WEST,
-				contactDetailsPanel);
+		sl_contactDetailsPanel.putConstraint(SpringLayout.NORTH, lblTypeLabel,
+				35, SpringLayout.NORTH, contactDetailsPanel);
+		sl_contactDetailsPanel.putConstraint(SpringLayout.WEST, lblTypeLabel,
+				10, SpringLayout.WEST, contactDetailsPanel);
 		contactDetailsPanel.add(lblTypeLabel);
 
 		// Positions and adds labels
 		for (int i = 0; i < labels.length; i++) {
-			sl_contactDetailsPanel.putConstraint(SpringLayout.WEST, labels[i], 0, SpringLayout.WEST,
-					contactDetailsPanel.getComponent(i));
-			sl_contactDetailsPanel.putConstraint(SpringLayout.NORTH, labels[i], PADDING, SpringLayout.SOUTH,
+			sl_contactDetailsPanel.putConstraint(SpringLayout.WEST, labels[i],
+					0, SpringLayout.WEST, contactDetailsPanel.getComponent(i));
+			sl_contactDetailsPanel.putConstraint(SpringLayout.NORTH, labels[i],
+					PADDING, SpringLayout.SOUTH,
 					contactDetailsPanel.getComponent(i));
 			contactDetailsPanel.add(labels[i]);
 		}
 
 		// Positions and adds placeholders
 		for (int i = 0; i < placeholders.length; i++) {
-			sl_contactDetailsPanel.putConstraint(SpringLayout.WEST, placeholders[i], 100, SpringLayout.WEST,
+			sl_contactDetailsPanel.putConstraint(SpringLayout.WEST,
+					placeholders[i], 100, SpringLayout.WEST,
 					contactDetailsPanel.getComponent(i));
-			sl_contactDetailsPanel.putConstraint(SpringLayout.NORTH, placeholders[i], 0, SpringLayout.NORTH,
+			sl_contactDetailsPanel.putConstraint(SpringLayout.NORTH,
+					placeholders[i], 0, SpringLayout.NORTH,
 					contactDetailsPanel.getComponent(i));
 			contactDetailsPanel.add(placeholders[i]);
 		}
 
 		// Positions and adds lblStateLabel
-		sl_contactDetailsPanel.putConstraint(SpringLayout.SOUTH, lblStateLabel, 0, SpringLayout.SOUTH, lblCityLabel);
-		sl_contactDetailsPanel.putConstraint(SpringLayout.WEST, lblStateLabel, 200, SpringLayout.WEST, lblCityLabel);
+		sl_contactDetailsPanel.putConstraint(SpringLayout.SOUTH, lblStateLabel,
+				0, SpringLayout.SOUTH, lblCityLabel);
+		sl_contactDetailsPanel.putConstraint(SpringLayout.WEST, lblStateLabel,
+				200, SpringLayout.WEST, lblCityLabel);
 		contactDetailsPanel.add(lblStateLabel);
 
 		// Positions and adds lblState
-		sl_contactDetailsPanel.putConstraint(SpringLayout.NORTH, lblState, 0, SpringLayout.NORTH, lblStateLabel);
-		sl_contactDetailsPanel.putConstraint(SpringLayout.WEST, lblState, 10, SpringLayout.EAST, lblStateLabel);
+		sl_contactDetailsPanel.putConstraint(SpringLayout.NORTH, lblState, 0,
+				SpringLayout.NORTH, lblStateLabel);
+		sl_contactDetailsPanel.putConstraint(SpringLayout.WEST, lblState, 10,
+				SpringLayout.EAST, lblStateLabel);
 		contactDetailsPanel.add(lblState);
 
 		// Positions and adds lblZipLabel
-		sl_contactDetailsPanel.putConstraint(SpringLayout.SOUTH, lblZipLabel, 0, SpringLayout.SOUTH, lblStateLabel);
-		sl_contactDetailsPanel.putConstraint(SpringLayout.WEST, lblZipLabel, 75, SpringLayout.WEST, lblStateLabel);
+		sl_contactDetailsPanel.putConstraint(SpringLayout.SOUTH, lblZipLabel, 0,
+				SpringLayout.SOUTH, lblStateLabel);
+		sl_contactDetailsPanel.putConstraint(SpringLayout.WEST, lblZipLabel, 75,
+				SpringLayout.WEST, lblStateLabel);
 		contactDetailsPanel.add(lblZipLabel);
 
 		// Positions and adds lblZip
-		sl_contactDetailsPanel.putConstraint(SpringLayout.NORTH, lblZip, 0, SpringLayout.NORTH, lblZipLabel);
-		sl_contactDetailsPanel.putConstraint(SpringLayout.WEST, lblZip, 10, SpringLayout.EAST, lblZipLabel);
+		sl_contactDetailsPanel.putConstraint(SpringLayout.NORTH, lblZip, 0,
+				SpringLayout.NORTH, lblZipLabel);
+		sl_contactDetailsPanel.putConstraint(SpringLayout.WEST, lblZip, 10,
+				SpringLayout.EAST, lblZipLabel);
 		contactDetailsPanel.add(lblZip);
 
 		lblNotes.setVerticalAlignment(SwingConstants.TOP);
@@ -421,9 +476,11 @@ public class ContactList extends JFrame {
 	 * @param contact the contact to add to <code>contactList</code>
 	 */
 	public void addNewContact(Contact contact) {
-		listModel.addElement(contact.getPerson().getFirstName() + " " + contact.getPerson().getLastName());
+		listModel.addElement(contact.getPerson().getFirstName() + " "
+				+ contact.getPerson().getLastName());
 		contactList.setSelectedIndex(listModel.getSize() - 1);
 		updateContactDetails();
-		lblTotalContacts.setText("Total Contacts: " + contactList.getModel().getSize());
+		lblTotalContacts
+				.setText("Total Contacts: " + contactList.getModel().getSize());
 	}
 }

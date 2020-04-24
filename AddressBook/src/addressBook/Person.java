@@ -141,8 +141,8 @@ public class Person {
 	 */
 	@Override
 	public String toString() {
-		return String.format("%s %s %s %s %s", title, firstName, middleName,
-				lastName, company);
+		return String.format("%s,%s,%s,%s,%s", title, company, firstName,
+				middleName, lastName);
 	}
 
 }

@@ -112,7 +112,7 @@ public class Phone {
 	 */
 	@Override
 	public String toString() {
-		return String.format("%s %s %s", phoneHome, phoneMobile, phoneOffice);
+		return String.format("%s,%s,%s", phoneHome, phoneMobile, phoneOffice);
 	}
 
 }

@@ -159,8 +159,8 @@ public class Contact {
 	 */
 	@Override
 	public String toString() {
-		return String.format("%s %s %s %s %s %s", type, person, address, phone,
-				email, notes);
+		return String.format("%d,%s,%s,%s,%s,%s,%s", id, type, person,
+				address, phone, email, notes);
 	}
 
 }

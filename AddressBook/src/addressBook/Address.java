@@ -138,7 +138,7 @@ public class Address {
 	 */
 	@Override
 	public String toString() {
-		return String.format("%s %s %s %s %d", address1, address2, city,
+		return String.format("%s,%s,%s,%s,%d", address1, address2, city,
 				state.toString(), zip);
 	}
 
