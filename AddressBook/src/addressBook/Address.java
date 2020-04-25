@@ -123,9 +123,7 @@ public class Address {
 
 	/**
 	 * Formats the addres to the following format:<br>
-	 * {address1}<br>
-	 * {address2}<br>
-	 * {city}, {state} {zip}
+	 * {address1},{address2},{city},{state},{zip}
 	 * 
 	 */
 	@Override

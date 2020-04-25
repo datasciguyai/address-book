@@ -276,7 +276,7 @@ public class ContactList extends JFrame {
 	}
 
 	/**
-	 * 
+	 * Updates the contact details based on the contact selected.
 	 */
 	public void updateContactDetails() {
 		String zip = null;
@@ -587,13 +587,6 @@ public class ContactList extends JFrame {
 				.setText("Total Contacts: " + contactList.getModel().getSize());
 	}
 
-	/**
-	 * Modifies each phone number to display in the following format:
-	 * (XXX)XXX-XXXX
-	 * 
-	 * @param number
-	 * @return
-	 */
 	private String toPhoneNumber(String number) {
 		number = "(" + number.substring(0, 3) + ")" + number.substring(3, 6)
 				+ "-" + number.substring(6);
