@@ -39,10 +39,7 @@ public class Phone {
 	 * @param phoneHome the phoneHome to set
 	 */
 	public void setPhoneHome(String phoneHome) {
-		if (this.phoneHome == " ")
-			this.phoneHome = "no number";
-		else
-			this.phoneHome = "no number";
+		this.phoneHome = phoneHome;
 	}
 
 	/**
