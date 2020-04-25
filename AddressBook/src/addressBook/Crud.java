@@ -13,7 +13,7 @@ import java.util.List;
  * Represents Crud; a singleton class that consists of static methods that
  * create, retrieve, update, and delete a contact.
  * 
- * @author Jeremiah Reynolds
+ * @author Jeremiah Reynolds + Adam Ross
  *
  */
 public class Crud {
@@ -72,7 +72,6 @@ public class Crud {
 						contactList.add(new Contact(type, new Person(title, firstName, middleName, lastName, company),
 								new Address(address1, address2, city, state, zip),
 								new Phone(phoneHome, phoneMobile, phoneOffice), new EmailAddress(email), notes));
-
 					}
 
 				} catch (FileNotFoundException e) {
