@@ -51,7 +51,6 @@ public class Crud {
 					while (reader.ready()) {
 						String line = reader.readLine();
 						String[] contactInfo = line.split(",");
-						int id = Integer.parseInt(contactInfo[0]);
 						ContactType type = Enum.valueOf(ContactType.class, contactInfo[1]);
 						Title title = Enum.valueOf(Title.class, contactInfo[2]);
 						String company = contactInfo[3];
