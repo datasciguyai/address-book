@@ -1,6 +1,5 @@
 package addressBook;
 
-import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.EventQueue;
@@ -13,8 +12,6 @@ import java.awt.event.KeyListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.List;
-
-import javax.swing.BoxLayout;
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -36,6 +33,7 @@ import javax.swing.border.EtchedBorder;
  * @author Jeremiah Reynolds
  *
  */
+@SuppressWarnings("serial")
 public class ContactList extends JFrame {
 
 	private JPanel contentPane;
@@ -79,38 +77,42 @@ public class ContactList extends JFrame {
 	 * Creates the frame and adds components.
 	 */
 	public ContactList() {
+		this.setTitle("Contact List");
 		setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-		setBounds(100, 100, 750, 600);
+		setBounds(300, 100, 750, 600);
 		setResizable(false);
 
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
-		contentPane.setLayout(new BorderLayout(0, 0));
+		contentPane.setLayout(null);
 
 		JPanel contactListPanel = newContactListPanel();
-		contentPane.add(contactListPanel, BorderLayout.WEST);
+		contentPane.add(contactListPanel);
 
 		JPanel contactDetailsPanel = newContactDetailsPanel();
-		contentPane.add(contactDetailsPanel, BorderLayout.EAST);
+		contentPane.add(contactDetailsPanel);
 		List<Contact> contacts = Crud.retrieveContacts();
 		contacts.forEach(el -> addNewContact(el));
 	}
 
 	private JPanel newContactListPanel() {
 		JPanel contactPanel = new JPanel();
+		contactPanel.setBounds(5, 5, 309, 561);
 		contactPanel.setBorder(new EmptyBorder(0, 10, 10, 10));
 		contactPanel.setAlignmentY(Component.TOP_ALIGNMENT);
-		contactPanel
-				.setLayout(new BoxLayout(contactPanel, BoxLayout.PAGE_AXIS));
+		contactPanel.setLayout(null);
 
 		JLabel lblContacts = new JLabel("Contacts");
-		lblContacts.setFont(new Font("Tahoma", Font.BOLD, 11));
+		lblContacts.setHorizontalAlignment(SwingConstants.CENTER);
+		lblContacts.setBounds(10, 0, 289, 34);
+		lblContacts.setFont(new Font("Tahoma", Font.BOLD, 13));
 		lblContacts.setBorder(new EmptyBorder(10, 0, 10, 0));
 		lblContacts.setAlignmentX(Component.CENTER_ALIGNMENT);
 		contactPanel.add(lblContacts);
 
 		JPanel contactListPanel = new JPanel();
+		contactListPanel.setBounds(10, 34, 289, 426);
 		contactListPanel
 				.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
 		contactPanel.add(contactListPanel);
@@ -168,15 +170,19 @@ public class ContactList extends JFrame {
 	private JLabel newTotalContacts() {
 		lblTotalContacts = new JLabel(
 				"Total Contacts: " + contactList.getModel().getSize());
-		lblTotalContacts.setBorder(new EmptyBorder(10, 0, 10, 0));
+		lblTotalContacts.setFont(new Font("Tahoma", Font.BOLD, 12));
+		lblTotalContacts.setHorizontalAlignment(SwingConstants.CENTER);
+		lblTotalContacts.setBounds(10, 471, 289, 34);
+		lblTotalContacts.setBorder(new EmptyBorder(5, 0, 10, 0));
 		lblTotalContacts.setAlignmentX(Component.CENTER_ALIGNMENT);
 		return lblTotalContacts;
 	}
 
 	private JPanel newButtonsPanel() {
 		JPanel buttonsPanel = new JPanel();
-		buttonsPanel.setBorder(new EmptyBorder(0, 50, 10, 50));
-		buttonsPanel.setLayout(new BoxLayout(buttonsPanel, BoxLayout.X_AXIS));
+		buttonsPanel.setBorder(new EmptyBorder(0, 0, 20, 0));
+		buttonsPanel.setBounds(10, 505, 289, 45);
+		buttonsPanel.setLayout(new GridLayout(0, 3, 10, 0));
 
 		JButton btnAddContact = newBtnAddContact();
 		buttonsPanel.add(btnAddContact);
@@ -374,9 +380,8 @@ public class ContactList extends JFrame {
 						.getPhoneOffice()));
 			lblEmail.setText(Crud.retrieveContacts()
 					.get(contactList.getSelectedIndex()).getEmail().getEmail());
-			lblNotes.setText(Crud.retrieveContacts()
-					.get(contactList.getSelectedIndex()).getNotes());
-
+			lblNotes.setText("<html><p>" + Crud.retrieveContacts()
+					.get(contactList.getSelectedIndex()).getNotes() + "</p></html>");
 		}
 	}
 
@@ -400,11 +405,45 @@ public class ContactList extends JFrame {
 		JLabel lblNotesLabel;
 
 		JPanel contactDetailsPanel = new JPanel();
+		contactDetailsPanel.setBounds(339, 5, 400, 561);
 		contactDetailsPanel.setBorder(new EmptyBorder(0, 0, 0, 400));
 		SpringLayout sl_contactDetailsPanel = new SpringLayout();
 		contactDetailsPanel.setLayout(sl_contactDetailsPanel);
 
-		lblTypeLabel = new JLabel("Type:");
+//		lblTypeLabel = new JLabel("Type:");
+//		lblTypeLabel.setFont(new Font("Tahoma", Font.PLAIN, 13));
+//		lblTitleLabel = new JLabel("Title:");
+//		lblTitleLabel.setFont(new Font("Tahoma", Font.PLAIN, 13));
+//		lblCompanyLabel = new JLabel("Company:");
+//		lblCompanyLabel.setFont(new Font("Tahoma", Font.PLAIN, 13));
+//		lblFirstNameLabel = new JLabel("First Name:");
+//		lblFirstNameLabel.setFont(new Font("Tahoma", Font.PLAIN, 13));
+//		lblMiddleNameLabel = new JLabel("Middle Name:");
+//		lblMiddleNameLabel.setFont(new Font("Tahoma", Font.PLAIN, 13));
+//		lblLastNameLabel = new JLabel("Last Name:");
+//		lblLastNameLabel.setFont(new Font("Tahoma", Font.PLAIN, 13));
+//		lblAddress1Label = new JLabel("Address 1:");
+//		lblAddress1Label.setFont(new Font("Tahoma", Font.PLAIN, 13));
+//		lblAddress2Label = new JLabel("Address 2:");
+//		lblAddress2Label.setFont(new Font("Tahoma", Font.PLAIN, 13));
+//		lblCityLabel = new JLabel("City:");
+//		lblCityLabel.setFont(new Font("Tahoma", Font.PLAIN, 13));
+//		lblStateLabel = new JLabel("State:");
+//		lblStateLabel.setFont(new Font("Tahoma", Font.PLAIN, 13));
+//		lblZipLabel = new JLabel("Zip:");
+//		lblZipLabel.setFont(new Font("Tahoma", Font.PLAIN, 13));
+//		lblHomePhoneLabel = new JLabel("Home Phone:");
+//		lblHomePhoneLabel.setFont(new Font("Tahoma", Font.PLAIN, 13));
+//		lblMobilePhoneLabel = new JLabel("Mobile Phone:");
+//		lblMobilePhoneLabel.setFont(new Font("Tahoma", Font.PLAIN, 13));
+//		lblOfficePhoneLabel = new JLabel("Office Phone:");
+//		lblOfficePhoneLabel.setFont(new Font("Tahoma", Font.PLAIN, 13));
+//		lblEmailLabel = new JLabel("Email:");
+//		lblEmailLabel.setFont(new Font("Tahoma", Font.PLAIN, 13));
+//		lblNotesLabel = new JLabel("Notes:");
+//		lblNotesLabel.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		
+		lblTypeLabel = new JLabel("Type: ");
 		lblTitleLabel = new JLabel("Title:");
 		lblCompanyLabel = new JLabel("Company:");
 		lblFirstNameLabel = new JLabel("First Name:");
@@ -422,6 +461,24 @@ public class ContactList extends JFrame {
 		lblNotesLabel = new JLabel("Notes:");
 
 		createPlaceholders();
+		
+//		lblType.setFont(new Font("Tahoma", Font.PLAIN, 13));
+//		lblTitle.setFont(new Font("Tahoma", Font.PLAIN, 13));
+//		lblCompany.setFont(new Font("Tahoma", Font.PLAIN, 13));
+//		lblFirstName.setFont(new Font("Tahoma", Font.PLAIN, 13));
+//		lblMiddleName.setFont(new Font("Tahoma", Font.PLAIN, 13));
+//		lblLastName.setFont(new Font("Tahoma", Font.PLAIN, 13));
+//		lblAddress1.setFont(new Font("Tahoma", Font.PLAIN, 13));
+//		lblAddress2.setFont(new Font("Tahoma", Font.PLAIN, 13));
+//		lblCity.setFont(new Font("Tahoma", Font.PLAIN, 13));
+//		lblState.setFont(new Font("Tahoma", Font.PLAIN, 13));
+//		lblZip.setFont(new Font("Tahoma", Font.PLAIN, 13));
+//		lblHomePhone.setFont(new Font("Tahoma", Font.PLAIN, 13));
+//		lblMobilePhone.setFont(new Font("Tahoma", Font.PLAIN, 13));
+//		lblOfficePhone.setFont(new Font("Tahoma", Font.PLAIN, 13));
+//		lblEmail.setFont(new Font("Tahoma", Font.PLAIN, 13));
+//		lblNotes.setFont(new Font("Tahoma", Font.PLAIN, 13));
+//		lblTotalContacts.setFont(new Font("Tahoma", Font.PLAIN, 13));
 
 		JLabel[] labels = { lblTitleLabel, lblCompanyLabel, lblFirstNameLabel,
 				lblMiddleNameLabel, lblLastNameLabel, lblAddress1Label,

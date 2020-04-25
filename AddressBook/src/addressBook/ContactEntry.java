@@ -6,15 +6,24 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.border.EmptyBorder;
 import javax.swing.SpringLayout;
 import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JTextField;
+import javax.swing.ScrollPaneConstants;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import javax.swing.border.LineBorder;
+import java.awt.Color;
+import javax.swing.border.EtchedBorder;
+import javax.swing.border.MatteBorder;
+import javax.swing.UIManager;
+import javax.swing.BoxLayout;
+import java.awt.GridLayout;
 
 /**
  * Implements a GUI form that allows the user to add a new contact or to update
@@ -23,6 +32,7 @@ import java.awt.event.ActionEvent;
  * @author Jeremiah Reynolds
  *
  */
+@SuppressWarnings("serial")
 public class ContactEntry extends JFrame {
 
 	private JPanel contentPane;
@@ -64,8 +74,14 @@ public class ContactEntry extends JFrame {
 	public ContactEntry(int id) {
 		this.id = id;
 		
+		if (id == 0) {
+			this.setTitle("Add Contact");
+		} else {
+			this.setTitle("Edit Contact");
+		}
+		
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setBounds(100, 100, 600, 600);
+		setBounds(400, 100, 600, 600);
 		setResizable(false);
 
 		contentPane = new JPanel();
@@ -77,6 +93,8 @@ public class ContactEntry extends JFrame {
 		contentPane.add(contactEntryPanel, BorderLayout.CENTER);
 
 		JPanel buttonPanel = new JPanel();
+		buttonPanel.setBorder(new EmptyBorder(0, 144, 12, 43));
+		buttonPanel.setLayout(new GridLayout(0, 2, 35, 0));
 		contentPane.add(buttonPanel, BorderLayout.SOUTH);
 
 		JButton btnSave = newBtnSave();
@@ -162,7 +180,7 @@ public class ContactEntry extends JFrame {
 //		JTextField[] values = { textFieldCompany, textFieldFirstName, textFieldMiddleName, textFieldLastName };
 
 		// Positions and adds lblTypeLabel
-		sl_contactDetailsPanel.putConstraint(SpringLayout.NORTH, lblTypeLabel, 36, SpringLayout.NORTH,
+		sl_contactDetailsPanel.putConstraint(SpringLayout.NORTH, lblTypeLabel, 15, SpringLayout.NORTH,
 				contactEntryPanel);
 		sl_contactDetailsPanel.putConstraint(SpringLayout.WEST, lblTypeLabel, 44, SpringLayout.WEST, contactEntryPanel);
 		contactEntryPanel.add(lblTypeLabel);
@@ -258,7 +276,7 @@ public class ContactEntry extends JFrame {
 
 		textFieldZip = new JTextField();
 		sl_contactDetailsPanel.putConstraint(SpringLayout.NORTH, textFieldZip, 0, SpringLayout.NORTH, lblZipLabel);
-		sl_contactDetailsPanel.putConstraint(SpringLayout.WEST, textFieldZip, 30, SpringLayout.WEST, lblZipLabel);
+		sl_contactDetailsPanel.putConstraint(SpringLayout.EAST, textFieldZip, 0, SpringLayout.EAST, textFieldAddress2);
 		contactEntryPanel.add(textFieldZip);
 		textFieldZip.setColumns(10);
 
@@ -293,11 +311,14 @@ public class ContactEntry extends JFrame {
 		textFieldEmail.setColumns(35);
 
 		textAreaNotes = new JTextArea();
-		textAreaNotes.setRows(10);
-		sl_contactDetailsPanel.putConstraint(SpringLayout.NORTH, textAreaNotes, 0, SpringLayout.NORTH, lblNotesLabel);
-		sl_contactDetailsPanel.putConstraint(SpringLayout.WEST, textAreaNotes, 100, SpringLayout.WEST, lblNotesLabel);
-		contactEntryPanel.add(textAreaNotes);
+		textAreaNotes.setRows(5);
 		textAreaNotes.setColumns(35);
+		textAreaNotes.setLineWrap(true);
+		JScrollPane scrollpane = new JScrollPane(textAreaNotes);
+		scrollpane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+		sl_contactDetailsPanel.putConstraint(SpringLayout.NORTH, scrollpane, 0, SpringLayout.NORTH, lblNotesLabel);
+		sl_contactDetailsPanel.putConstraint(SpringLayout.WEST, scrollpane, 100, SpringLayout.WEST, lblNotesLabel);
+		contactEntryPanel.add(scrollpane);		
 
 		return contactEntryPanel;
 	}
@@ -310,7 +331,7 @@ public class ContactEntry extends JFrame {
 			 * Saves a new contact.
 			 */
 			public void actionPerformed(ActionEvent e) {
-				int zip = 0;
+				int zip = 0;				
 
 				if (id == 0) {
 					if (textFieldFirstName.getText().isEmpty()) {
@@ -349,6 +370,8 @@ public class ContactEntry extends JFrame {
 		});
 		return btnSave;
 	}
+	
+	
 
 	private JButton newBtnCancel() {
 		JButton btnCancel = new JButton("Cancel");
