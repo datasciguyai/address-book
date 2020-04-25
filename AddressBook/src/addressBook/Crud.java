@@ -95,6 +95,9 @@ public class Crud {
 			String lastName, String address1, String address2, String city,
 			State state, int zip, String phoneHome, String phoneMobile,
 			String phoneOffice, String email, String notes) {
+
+		String fileName = "src/addressBook/Contacts/Contacts.csv";
+
 		contactList.forEach(c -> {
 			if (c.getId() == id) {
 				c.setType(type);
@@ -117,10 +120,12 @@ public class Crud {
 		});
 
 		contactListFrame.updateContactDetails();
+		printToFile();
 	}
 
 	protected static void deleteContact(int id) {
 		contactList.removeIf(f -> f.getId() == id);
+		printToFile();
 	}
 
 	protected static void setContactList(ContactList contactList) {

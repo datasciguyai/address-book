@@ -8,6 +8,8 @@ import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.List;
@@ -141,6 +143,25 @@ public class ContactList extends JFrame {
 			}
 		});
 
+		contactList.addKeyListener(new KeyListener() {
+
+			@Override
+			public void keyTyped(KeyEvent e) {
+				updateContactDetails();
+
+			}
+
+			@Override
+			public void keyReleased(KeyEvent e) {
+				updateContactDetails();
+			}
+
+			@Override
+			public void keyPressed(KeyEvent e) {
+				updateContactDetails();
+			}
+		});
+
 		return contactList;
 	}
 
@@ -254,6 +275,17 @@ public class ContactList extends JFrame {
 	public void updateContactDetails() {
 		String zip = null;
 
+		if (contactList.getModel().getSize() != 0) {
+			listModel.setElementAt(
+					Crud.retrieveContacts().get(contactList.getSelectedIndex())
+							.getPerson().getFirstName()
+							+ " "
+							+ Crud.retrieveContacts()
+									.get(contactList.getSelectedIndex())
+									.getPerson().getLastName(),
+					contactList.getSelectedIndex());
+		}
+
 		if (contactList.getModel().getSize() == 0) {
 			lblType.setText("");
 			lblTitle.setText("");
@@ -318,19 +350,33 @@ public class ContactList extends JFrame {
 			lblCity.setText(
 					Crud.retrieveContacts().get(contactList.getSelectedIndex())
 							.getAddress().getCity());
-			lblHomePhone.setText(
-					Crud.retrieveContacts().get(contactList.getSelectedIndex())
-							.getPhone().getPhoneHome());
-			lblMobilePhone.setText(
-					Crud.retrieveContacts().get(contactList.getSelectedIndex())
-							.getPhone().getPhoneMobile());
-			lblOfficePhone.setText(
-					Crud.retrieveContacts().get(contactList.getSelectedIndex())
-							.getPhone().getPhoneOffice());
+
+			if (Crud.retrieveContacts().get(contactList.getSelectedIndex())
+					.getPhone().getPhoneHome().isEmpty())
+				lblHomePhone.setText("");
+			else
+				lblHomePhone.setText(toPhoneNumber(Crud.retrieveContacts()
+						.get(contactList.getSelectedIndex()).getPhone()
+						.getPhoneHome()));
+			if (Crud.retrieveContacts().get(contactList.getSelectedIndex())
+					.getPhone().getPhoneMobile().isEmpty())
+				lblMobilePhone.setText("");
+			else
+				lblMobilePhone.setText(toPhoneNumber(Crud.retrieveContacts()
+						.get(contactList.getSelectedIndex()).getPhone()
+						.getPhoneMobile()));
+			if (Crud.retrieveContacts().get(contactList.getSelectedIndex())
+					.getPhone().getPhoneOffice().isEmpty())
+				lblOfficePhone.setText("");
+			else
+				lblOfficePhone.setText(toPhoneNumber(Crud.retrieveContacts()
+						.get(contactList.getSelectedIndex()).getPhone()
+						.getPhoneOffice()));
 			lblEmail.setText(Crud.retrieveContacts()
 					.get(contactList.getSelectedIndex()).getEmail().getEmail());
 			lblNotes.setText(Crud.retrieveContacts()
 					.get(contactList.getSelectedIndex()).getNotes());
+
 		}
 	}
 
@@ -482,5 +528,19 @@ public class ContactList extends JFrame {
 		updateContactDetails();
 		lblTotalContacts
 				.setText("Total Contacts: " + contactList.getModel().getSize());
+	}
+
+	/**
+	 * Modifies each phone number to display in the following format:
+	 * (XXX)XXX-XXXX
+	 * 
+	 * @param number
+	 * @return
+	 */
+	private String toPhoneNumber(String number) {
+		number = "(" + number.substring(0, 3) + ")" + number.substring(3, 6)
+				+ "-" + number.substring(6);
+
+		return number;
 	}
 }

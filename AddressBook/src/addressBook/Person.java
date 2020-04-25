@@ -25,10 +25,10 @@ public class Person {
 	public Person(Title title, String firstName, String middleName,
 			String lastName, String company) {
 		this.title = title;
-		this.firstName = optional(firstName);
-		this.middleName = optional(middleName);
-		this.lastName = optional(lastName);
-		this.company = optional(company);
+		this.firstName = firstName;
+		this.middleName = middleName;
+		this.lastName = lastName;
+		this.company = company;
 	}
 
 	/**
@@ -64,7 +64,7 @@ public class Person {
 	 * @param firstName the firstName to set
 	 */
 	public void setFirstName(String firstName) {
-		this.firstName = optional(firstName);
+		this.firstName = firstName;
 	}
 
 	/**
@@ -82,7 +82,7 @@ public class Person {
 	 * @param middleName the middleName to set
 	 */
 	public void setMiddleName(String middleName) {
-		this.middleName = optional(middleName);
+		this.middleName = middleName;
 	}
 
 	/**
@@ -100,7 +100,7 @@ public class Person {
 	 * @param lastName the lastName to set
 	 */
 	public void setLastName(String lastName) {
-		this.lastName = optional(lastName);
+		this.lastName = lastName;
 	}
 
 	/**
@@ -118,22 +118,9 @@ public class Person {
 	 * @param company the company to set
 	 */
 	public void setCompany(String company) {
-		this.company = optional(company);
+		this.company = company;
 	}
 
-	/**
-	 * * Sets certain fields as optional. Determines if the field is null; if
-	 * so, it returns blank text to be displayed instead.
-	 * 
-	 * @param string the String to be determined whether the field is null
-	 * @return the String if not null, or blank text if so
-	 */
-	public String optional(String string) {
-		if (string == null)
-			return "";
-		else
-			return string;
-	}
 
 	/**
 	 * Overrides the toString method to the following format:<br>

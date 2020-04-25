@@ -16,10 +16,7 @@ public class EmailAddress {
 	 * @param email the contact's email address
 	 */
 	public EmailAddress(String email) {
-		if (email == null)
-			this.email = "";
-		else
-			this.email = email;
+		this.email = email;
 	}
 
 	/**
@@ -37,10 +34,7 @@ public class EmailAddress {
 	 * @param email the email to set
 	 */
 	public void setEmail(String email) {
-		if (email == null)
-			this.email = "";
-		else
-			this.email = email;
+		this.email = email;
 	}
 
 	/**

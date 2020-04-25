@@ -25,12 +25,7 @@ public class Address {
 	public Address(String address1, String address2, String city, State state,
 			int zip) {
 		this.address1 = address1;
-
-		if (address2 == null)
-			this.address2 = "";
-		else
-			this.address2 = address2;
-
+		this.address2 = address2;
 		this.city = city;
 		this.state = state;
 		this.zip = zip;
@@ -69,10 +64,7 @@ public class Address {
 	 * @param address2 the address2 to set
 	 */
 	public void setAddress2(String address2) {
-		if (address2 == null)
-			this.address2 = "";
-		else
-			this.address2 = address2;
+		this.address2 = address2;
 	}
 
 	/**

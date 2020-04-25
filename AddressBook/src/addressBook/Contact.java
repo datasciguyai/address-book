@@ -35,7 +35,7 @@ public class Contact {
 		this.address = address;
 		this.phone = phone;
 		this.email = email;
-		this.notes = optional(notes);
+		this.notes = notes;
 	}
 
 	/**
@@ -46,7 +46,6 @@ public class Contact {
 	public Contact(Contact contact) {
 		this(contact.getType(), contact.getPerson(), contact.getAddress(),
 				contact.getPhone(), contact.getEmail(), contact.getNotes());
-
 	}
 
 	/**
@@ -136,21 +135,7 @@ public class Contact {
 	 * @param notes the notes to set
 	 */
 	public void setNotes(String notes) {
-		this.notes = optional(notes);
-	}
-
-	/**
-	 * Sets certain fields as optional. Determines if the field is null; if so,
-	 * it returns blank text to be displayed instead.
-	 * 
-	 * @param string the String to be determined whether the field is null
-	 * @return the String if not null, or blank text if so
-	 */
-	public String optional(String string) {
-		if (string == null)
-			return "";
-		else
-			return string;
+		this.notes = notes;
 	}
 
 	/**
@@ -159,8 +144,8 @@ public class Contact {
 	 */
 	@Override
 	public String toString() {
-		return String.format("%d,%s,%s,%s,%s,%s,%s", id, type, person,
-				address, phone, email, notes);
+		return String.format("%d,%s,%s,%s,%s,%s,%s ", id, type, person, address,
+				phone, email, notes);
 	}
 
 }

@@ -19,9 +19,9 @@ public class Phone {
 	 * @param phoneOffice the contact's office number
 	 */
 	public Phone(String phoneHome, String phoneMobile, String phoneOffice) {
-		this.phoneHome = optional(phoneHome);
-		this.phoneMobile = optional(phoneMobile);
-		this.phoneOffice = optional(phoneOffice);
+		this.phoneHome = phoneHome;
+		this.phoneMobile = phoneMobile;
+		this.phoneOffice = phoneOffice;
 	}
 
 	/**
@@ -39,7 +39,10 @@ public class Phone {
 	 * @param phoneHome the phoneHome to set
 	 */
 	public void setPhoneHome(String phoneHome) {
-		this.phoneHome = optional(phoneHome);
+		if (this.phoneHome == " ")
+			this.phoneHome = "no number";
+		else
+			this.phoneHome = "no number";
 	}
 
 	/**
@@ -57,7 +60,7 @@ public class Phone {
 	 * @param phoneMobile the phoneMobile to set
 	 */
 	public void setPhoneMobile(String phoneMobile) {
-		this.phoneMobile = optional(phoneMobile);
+		this.phoneMobile = phoneMobile;
 	}
 
 	/**
@@ -75,35 +78,7 @@ public class Phone {
 	 * @param phoneOffice the phoneOffice to set
 	 */
 	public void setPhoneOffice(String phoneOffice) {
-		this.phoneOffice = optional(phoneOffice);
-	}
-
-	/**
-	 * * Sets certain fields as optional. Determines if the field is null; if
-	 * so, it returns blank text to be displayed instead.
-	 * 
-	 * @param string the String to be determined whether the field is null
-	 * @return the String if not null, or blank text if so
-	 */
-	public String optional(String string) {
-		if (string.isEmpty())
-			return "";
-		else
-			return toPhoneNumber(string);
-	}
-
-	/**
-	 * Modifies each phone number to display in the following format:
-	 * (XXX)XXX-XXXX
-	 * 
-	 * @param number
-	 * @return
-	 */
-	public String toPhoneNumber(String number) {
-		number = "(" + number.substring(0, 3) + ")" + number.substring(3, 6)
-				+ "-" + number.substring(6);
-
-		return number;
+		this.phoneOffice = phoneOffice;
 	}
 
 	/**
