@@ -34,7 +34,6 @@ import java.awt.GridLayout;
  */
 @SuppressWarnings("serial")
 public class ContactEntry extends JFrame {
-
 	private JPanel contentPane;
 	private JTextField textFieldCompany;
 	private JTextField textFieldFirstName;
@@ -73,13 +72,13 @@ public class ContactEntry extends JFrame {
 	 */
 	public ContactEntry(int id) {
 		this.id = id;
-		
+
 		if (id == 0) {
 			this.setTitle("Add Contact");
 		} else {
 			this.setTitle("Edit Contact");
 		}
-		
+
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(400, 100, 600, 600);
 		setResizable(false);
@@ -92,9 +91,7 @@ public class ContactEntry extends JFrame {
 		JPanel contactEntryPanel = newContactEntryPanel();
 		contentPane.add(contactEntryPanel, BorderLayout.CENTER);
 
-		JPanel buttonPanel = new JPanel();
-		buttonPanel.setBorder(new EmptyBorder(0, 144, 12, 43));
-		buttonPanel.setLayout(new GridLayout(0, 2, 35, 0));
+		JPanel buttonPanel = newButtonPanel();
 		contentPane.add(buttonPanel, BorderLayout.SOUTH);
 
 		JButton btnSave = newBtnSave();
@@ -111,6 +108,13 @@ public class ContactEntry extends JFrame {
 			});
 			populateForm();
 		}
+	}
+
+	private JPanel newButtonPanel() {
+		JPanel buttonPanel = new JPanel();
+		buttonPanel.setBorder(new EmptyBorder(0, 144, 12, 43));
+		buttonPanel.setLayout(new GridLayout(0, 2, 35, 0));
+		return buttonPanel;
 	}
 
 	private void populateForm() {
@@ -177,8 +181,6 @@ public class ContactEntry extends JFrame {
 				lblAddress1Label, lblAddress2Label, lblCityLabel, lblHomePhoneLabel, lblMobilePhoneLabel,
 				lblOfficePhoneLabel, lblEmailLabel, lblNotesLabel };
 
-//		JTextField[] values = { textFieldCompany, textFieldFirstName, textFieldMiddleName, textFieldLastName };
-
 		// Positions and adds lblTypeLabel
 		sl_contactDetailsPanel.putConstraint(SpringLayout.NORTH, lblTypeLabel, 15, SpringLayout.NORTH,
 				contactEntryPanel);
@@ -211,54 +213,54 @@ public class ContactEntry extends JFrame {
 				lblCompanyLabel);
 		sl_contactDetailsPanel.putConstraint(SpringLayout.WEST, textFieldCompany, 100, SpringLayout.WEST,
 				lblCompanyLabel);
-		contactEntryPanel.add(textFieldCompany);
 		textFieldCompany.setColumns(35);
+		contactEntryPanel.add(textFieldCompany);
 
 		textFieldFirstName = new JTextField();
 		sl_contactDetailsPanel.putConstraint(SpringLayout.NORTH, textFieldFirstName, 0, SpringLayout.NORTH,
 				lblFirstNameLabel);
 		sl_contactDetailsPanel.putConstraint(SpringLayout.WEST, textFieldFirstName, 100, SpringLayout.WEST,
 				lblFirstNameLabel);
-		contactEntryPanel.add(textFieldFirstName);
 		textFieldFirstName.setColumns(35);
+		contactEntryPanel.add(textFieldFirstName);
 
 		textFieldMiddleName = new JTextField();
 		sl_contactDetailsPanel.putConstraint(SpringLayout.NORTH, textFieldMiddleName, 0, SpringLayout.NORTH,
 				lblMiddleNameLabel);
 		sl_contactDetailsPanel.putConstraint(SpringLayout.WEST, textFieldMiddleName, 100, SpringLayout.WEST,
 				lblMiddleNameLabel);
-		contactEntryPanel.add(textFieldMiddleName);
 		textFieldMiddleName.setColumns(35);
+		contactEntryPanel.add(textFieldMiddleName);
 
 		textFieldLastName = new JTextField();
 		sl_contactDetailsPanel.putConstraint(SpringLayout.NORTH, textFieldLastName, 0, SpringLayout.NORTH,
 				lblLastNameLabel);
 		sl_contactDetailsPanel.putConstraint(SpringLayout.WEST, textFieldLastName, 100, SpringLayout.WEST,
 				lblLastNameLabel);
-		contactEntryPanel.add(textFieldLastName);
 		textFieldLastName.setColumns(35);
+		contactEntryPanel.add(textFieldLastName);
 
 		textFieldAddress1 = new JTextField();
 		sl_contactDetailsPanel.putConstraint(SpringLayout.NORTH, textFieldAddress1, 0, SpringLayout.NORTH,
 				lblAddress1Label);
 		sl_contactDetailsPanel.putConstraint(SpringLayout.WEST, textFieldAddress1, 100, SpringLayout.WEST,
 				lblAddress1Label);
-		contactEntryPanel.add(textFieldAddress1);
 		textFieldAddress1.setColumns(35);
+		contactEntryPanel.add(textFieldAddress1);
 
 		textFieldAddress2 = new JTextField();
 		sl_contactDetailsPanel.putConstraint(SpringLayout.NORTH, textFieldAddress2, 0, SpringLayout.NORTH,
 				lblAddress2Label);
 		sl_contactDetailsPanel.putConstraint(SpringLayout.WEST, textFieldAddress2, 100, SpringLayout.WEST,
 				lblAddress2Label);
-		contactEntryPanel.add(textFieldAddress2);
 		textFieldAddress2.setColumns(35);
+		contactEntryPanel.add(textFieldAddress2);
 
 		textFieldCity = new JTextField();
 		sl_contactDetailsPanel.putConstraint(SpringLayout.NORTH, textFieldCity, 0, SpringLayout.NORTH, lblCityLabel);
 		sl_contactDetailsPanel.putConstraint(SpringLayout.WEST, textFieldCity, 100, SpringLayout.WEST, lblCityLabel);
-		contactEntryPanel.add(textFieldCity);
 		textFieldCity.setColumns(10);
+		contactEntryPanel.add(textFieldCity);
 
 		sl_contactDetailsPanel.putConstraint(SpringLayout.NORTH, lblStateLabel, 0, SpringLayout.NORTH, textFieldCity);
 		sl_contactDetailsPanel.putConstraint(SpringLayout.WEST, lblStateLabel, 125, SpringLayout.WEST, textFieldCity);
@@ -277,38 +279,38 @@ public class ContactEntry extends JFrame {
 		textFieldZip = new JTextField();
 		sl_contactDetailsPanel.putConstraint(SpringLayout.NORTH, textFieldZip, 0, SpringLayout.NORTH, lblZipLabel);
 		sl_contactDetailsPanel.putConstraint(SpringLayout.EAST, textFieldZip, 0, SpringLayout.EAST, textFieldAddress2);
-		contactEntryPanel.add(textFieldZip);
 		textFieldZip.setColumns(10);
+		contactEntryPanel.add(textFieldZip);
 
 		textFieldHomePhone = new JTextField();
 		sl_contactDetailsPanel.putConstraint(SpringLayout.NORTH, textFieldHomePhone, 0, SpringLayout.NORTH,
 				lblHomePhoneLabel);
 		sl_contactDetailsPanel.putConstraint(SpringLayout.WEST, textFieldHomePhone, 100, SpringLayout.WEST,
 				lblHomePhoneLabel);
-		contactEntryPanel.add(textFieldHomePhone);
 		textFieldHomePhone.setColumns(10);
+		contactEntryPanel.add(textFieldHomePhone);
 
 		textFieldMobilePhone = new JTextField();
 		sl_contactDetailsPanel.putConstraint(SpringLayout.NORTH, textFieldMobilePhone, 0, SpringLayout.NORTH,
 				lblMobilePhoneLabel);
 		sl_contactDetailsPanel.putConstraint(SpringLayout.WEST, textFieldMobilePhone, 100, SpringLayout.WEST,
 				lblMobilePhoneLabel);
-		contactEntryPanel.add(textFieldMobilePhone);
 		textFieldMobilePhone.setColumns(10);
+		contactEntryPanel.add(textFieldMobilePhone);
 
 		textFieldOfficePhone = new JTextField();
 		sl_contactDetailsPanel.putConstraint(SpringLayout.NORTH, textFieldOfficePhone, 0, SpringLayout.NORTH,
 				lblOfficePhoneLabel);
 		sl_contactDetailsPanel.putConstraint(SpringLayout.WEST, textFieldOfficePhone, 100, SpringLayout.WEST,
 				lblOfficePhoneLabel);
-		contactEntryPanel.add(textFieldOfficePhone);
 		textFieldOfficePhone.setColumns(10);
+		contactEntryPanel.add(textFieldOfficePhone);
 
 		textFieldEmail = new JTextField();
 		sl_contactDetailsPanel.putConstraint(SpringLayout.NORTH, textFieldEmail, 0, SpringLayout.NORTH, lblEmailLabel);
 		sl_contactDetailsPanel.putConstraint(SpringLayout.WEST, textFieldEmail, 100, SpringLayout.WEST, lblEmailLabel);
-		contactEntryPanel.add(textFieldEmail);
 		textFieldEmail.setColumns(35);
+		contactEntryPanel.add(textFieldEmail);
 
 		textAreaNotes = new JTextArea();
 		textAreaNotes.setRows(5);
@@ -318,7 +320,7 @@ public class ContactEntry extends JFrame {
 		scrollpane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 		sl_contactDetailsPanel.putConstraint(SpringLayout.NORTH, scrollpane, 0, SpringLayout.NORTH, lblNotesLabel);
 		sl_contactDetailsPanel.putConstraint(SpringLayout.WEST, scrollpane, 100, SpringLayout.WEST, lblNotesLabel);
-		contactEntryPanel.add(scrollpane);		
+		contactEntryPanel.add(scrollpane);
 
 		return contactEntryPanel;
 	}
@@ -331,15 +333,16 @@ public class ContactEntry extends JFrame {
 			 * Saves a new contact.
 			 */
 			public void actionPerformed(ActionEvent e) {
-				int zip = 0;				
+				int zip = 0;
+
+				if (!textFieldZip.getText().isEmpty()) {
+					zip = Integer.valueOf(textFieldZip.getText());
+				}
 
 				if (id == 0) {
 					if (textFieldFirstName.getText().isEmpty()) {
 						JOptionPane.showMessageDialog(null, "Please enter a minimum of a first name.");
 					} else {
-						if (!textFieldZip.getText().isEmpty()) {
-							zip = Integer.valueOf(textFieldZip.getText());
-						}
 						Crud.createContact((ContactType) comboBoxType.getSelectedItem(),
 								(Title) comboBoxTitle.getSelectedItem(), textFieldCompany.getText(),
 								textFieldFirstName.getText(), textFieldMiddleName.getText(),
@@ -353,9 +356,6 @@ public class ContactEntry extends JFrame {
 					if (textFieldFirstName.getText().isEmpty()) {
 						JOptionPane.showMessageDialog(null, "Please enter a minimum of a first name.");
 					} else {
-						if (!textFieldZip.getText().isEmpty()) {
-							zip = Integer.valueOf(textFieldZip.getText());
-						}
 						Crud.updateContact(id, (ContactType) comboBoxType.getSelectedItem(),
 								(Title) comboBoxTitle.getSelectedItem(), textFieldCompany.getText(),
 								textFieldFirstName.getText(), textFieldMiddleName.getText(),
@@ -370,8 +370,6 @@ public class ContactEntry extends JFrame {
 		});
 		return btnSave;
 	}
-	
-	
 
 	private JButton newBtnCancel() {
 		JButton btnCancel = new JButton("Cancel");
