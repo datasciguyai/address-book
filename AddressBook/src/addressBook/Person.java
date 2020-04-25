@@ -124,7 +124,7 @@ public class Person {
 
 	/**
 	 * Overrides the toString method to the following format:<br>
-	 * {title} {first name} {middle name} {last name} {company}
+	 * {title},{first name},{middle name},{last name},{company}
 	 */
 	@Override
 	public String toString() {
